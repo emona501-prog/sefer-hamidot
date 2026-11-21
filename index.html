@@ -334,6 +334,60 @@
     border-radius:8px; padding:8px 10px; margin-top:8px; display:none;
   }
   .biur-wrap{ margin-top:10px; }
+  /* ===== פס דיבורים רץ למעלה + פס הקדשות למטה + שיתוף האפליקציה ===== */
+  .sh-tick{ display:flex; align-items:center; gap:8px; overflow:hidden; user-select:none; -webkit-user-select:none; cursor:pointer; }
+  .sh-tick .tk-win{ position:relative; flex:1; height:24px; overflow:hidden; white-space:nowrap;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent); }
+  .sh-tick .tk-run{ position:absolute; left:0; top:1px; white-space:nowrap; will-change:transform; animation:shTkRun 18s linear 1; }
+  @keyframes shTkRun{ from{ transform:translateX(var(--a,-100%)); } to{ transform:translateX(var(--b,100%)); } }
+  @media (prefers-reduced-motion:reduce){ .sh-tick .tk-run{ animation-duration:30s !important; } }
+  #shQuoteTick{ margin:calc(8px + env(safe-area-inset-top,0px)) -14px 0; padding:4px 10px; border-radius:12px;
+    background:linear-gradient(90deg, var(--maroon-dark), var(--maroon), var(--maroon-dark)); border:1px solid rgba(243,215,142,.45); box-shadow:0 3px 10px rgba(0,0,0,.12); }
+  #shQuoteTick .tk-ic{ flex:0 0 auto; font-size:16px; filter:drop-shadow(0 0 4px rgba(243,215,142,.8)); animation:shTkGlow 3.2s ease-in-out infinite; }
+  @keyframes shTkGlow{ 0%,100%{ transform:scale(1); opacity:.85; } 50%{ transform:scale(1.15); opacity:1; } }
+  #shQuoteTick .tk-run{ color:#F6EFDC; font:600 15px var(--font-body); }
+  #shQuoteTick .tk-run small{ color:#F3D78E; font:500 12.5px var(--font-ui); }
+  #shQuoteTick[hidden]{ display:none; }
+  #shHkBar{ display:none; position:fixed; left:0; right:0; bottom:0; z-index:58; height:calc(28px + env(safe-area-inset-bottom,0px)); padding:0 8px env(safe-area-inset-bottom,0px);
+    background:linear-gradient(90deg,#3a2810,#6a4818,#3a2810); box-shadow:0 -2px 10px rgba(0,0,0,.18); }
+  #shHkBar .tk-win{ height:22px; }
+  #shHkBar .tk-run{ color:#F3E3BD; font:500 13.5px var(--font-ui); top:2px; }
+  #shHkBar .tk-run b{ color:#FFE3A0; font-weight:600; }
+  #shHkBar .tk-run i{ font-style:normal; margin:0 12px; opacity:.7; }
+  #shHkBar .hk-l{ margin-inline-end:10px; opacity:.9; }
+  body.hk-on:not([data-shv]) #shHkBar, body.hk-on[data-shv="landing"] #shHkBar, body.hk-on[data-shv="home"] #shHkBar{ display:flex; }
+  body.hk-show #app{ padding-bottom:34px; }
+  body.hk-show #shFab{ bottom:calc(52px + env(safe-area-inset-bottom,0px)); }
+  body.hk-show #midotBotFab:not([style*="top"]){ bottom:calc(52px + env(safe-area-inset-bottom,0px)); }
+  body.hk-show #midotBotPanel{ bottom:calc(116px + env(safe-area-inset-bottom,0px)); }
+  body.game-active #shHkBar, body.game-active #shQuoteTick{ display:none !important; }
+  @media print{ #shHkBar, #shQuoteTick{ display:none !important; } }
+  .shx-ov{ position:fixed; inset:0; z-index:420; background:rgba(20,12,8,.55); display:flex; align-items:flex-end; justify-content:center; }
+  .shx-sheet{ width:100%; max-width:480px; max-height:88vh; overflow-y:auto; background:var(--paper); border-radius:22px 22px 0 0; padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px)); box-shadow:0 -8px 30px rgba(0,0,0,.3); direction:rtl; font-family:var(--font-ui); color:var(--ink); animation:shxUp .2s ease both; }
+  @keyframes shxUp{ from{ transform:translateY(40px); opacity:0; } to{ transform:none; opacity:1; } }
+  .shx-sheet h3{ margin:0 0 6px; text-align:center; color:var(--maroon-dark); font-family:var(--font-display); font-size:21px; }
+  .shx-hd{ text-align:center; font-size:34px; line-height:1; margin-bottom:4px; }
+  .shx-sub{ font-size:13px; color:var(--ink-soft); line-height:1.6; }
+  .shx-intro{ background:rgba(169,133,47,.1); border-inline-start:3px solid var(--gold); border-radius:10px; padding:10px 12px; font-size:13.5px; line-height:1.7; margin:8px 0 12px; }
+  .shx-lbl{ font-weight:700; font-size:13.5px; margin:12px 0 6px; color:var(--maroon-dark); }
+  .shx-chips{ display:flex; flex-wrap:wrap; gap:6px; }
+  .shx-chips button{ border:1px solid var(--line); background:var(--paper-2); color:var(--ink); border-radius:999px; padding:7px 12px; font:600 13px var(--font-ui); cursor:pointer; }
+  .shx-chips button small{ display:block; font-weight:400; font-size:11px; color:var(--ink-soft); }
+  .shx-chips button.on{ background:var(--maroon-dark); border-color:var(--maroon-dark); color:#F3E9D2; }
+  .shx-chips button.on small{ color:#F3D78E; }
+  .shx-sheet textarea, .shx-sheet input{ width:100%; box-sizing:border-box; border:1px solid var(--line); border-radius:12px; padding:10px; font:15px var(--font-ui); background:#fff; color:var(--ink); direction:rtl; }
+  .shx-sum{ margin:12px 0; text-align:center; background:var(--paper-2); border:1px solid rgba(169,133,47,.45); border-radius:14px; padding:10px; }
+  .shx-sum b{ display:block; font-size:18px; color:var(--maroon-dark); }
+  .shx-sum small{ color:var(--ink-soft); white-space:pre-line; }
+  .shx-btn{ display:block; width:100%; border:0; border-radius:14px; padding:13px; margin-top:8px; font:700 15.5px var(--font-ui); cursor:pointer; background:var(--maroon-dark); color:#F3E9D2; text-align:center; text-decoration:none; }
+  .shx-btn.alt{ background:var(--paper-2); color:var(--maroon-dark); border:1px solid var(--line); }
+  .shx-row{ display:flex; gap:8px; } .shx-row .shx-btn{ flex:1; }
+  .shx-bless{ margin-top:12px; text-align:center; font-size:13px; color:#7a5a18; line-height:1.7; font-weight:600; }
+  .shx-x{ position:absolute; margin-top:-6px; inset-inline-end:16px; border:0; background:none; font-size:22px; color:var(--ink-soft); cursor:pointer; }
+  .shx-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:10px; }
+  .shx-steps{ font-size:13.5px; line-height:1.8; margin:8px 0; padding:0; list-style:none; }
+  .shx-steps li{ margin-bottom:6px; } .shx-steps b{ color:var(--maroon-dark); }
+
   .src-share-btn{ margin-top:10px; padding:8px 12px; border-radius:12px; border:1px dashed var(--maroon); background:#fff8ec; color:var(--maroon); font:inherit; font-size:14px; cursor:pointer; }
   .src-share-overlay{ position:fixed; inset:0; background:rgba(0,0,0,.45); display:none; align-items:center; justify-content:center; z-index:400; padding:16px; }
   .src-share-overlay.show{ display:flex; }
@@ -1718,6 +1772,7 @@
   <!-- HOME -->
   <!-- LANDING -->
   <div id="landing">
+    <div class="sh-tick" id="shQuoteTick" hidden role="button" aria-label="דיבורים מספר המידות"><span class="tk-ic">✨</span><div class="tk-win"><div class="tk-run"></div></div></div>
     <div class="hebrew-date-bar" id="hebrewDateBar">
       <button class="reminder-bell" id="reminderBellBtn" title="תזכורות והגדרות">🔔</button>
       <button class="private-room-btn" id="privateRoomBtn" title="חדר פרטי">🚪<span class="prb-count" id="prbCount" style="display:none;">0</span></button>
@@ -1800,6 +1855,20 @@
         <div>
           <div class="lb-label">הערות אישיות</div>
           <div class="lb-sub">כל ההערות שלך במקום אחד</div>
+        </div>
+      </div>
+      <div class="landing-btn" id="btnShareApp">
+        <span class="lb-ic">📤</span>
+        <div>
+          <div class="lb-label">שתפו את האפליקציה</div>
+          <div class="lb-sub">זיכוי הרבים — שלחו לחברים ולמשפחה</div>
+        </div>
+      </div>
+      <div class="landing-btn" id="btnDedicate">
+        <span class="lb-ic">🕯️</span>
+        <div>
+          <div class="lb-label">הקדשת הלימוד</div>
+          <div class="lb-sub">לרפואה, לעילוי נשמת, להצלחה ולישועה</div>
         </div>
       </div>
       <a class="landing-btn" id="btnOpenBreslovPro" href="https://emona501-prog.github.io/breslever-pro/" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">
@@ -2918,6 +2987,7 @@
 
   <button id="bgMusicToggle" title="ניגון רקע">🎵</button>
   <button id="settingsFab" title="הגדרות">⚙️</button>
+  <div class="sh-tick" id="shHkBar" role="button" aria-label="הקדשות"><div class="tk-win"><div class="tk-run"></div></div></div>
   <div id="shFab">
     <div id="shFabPanel" role="menu">
       <button class="fi wide" data-f="yt"><img id="shFabLogo" alt=""><span>ערוץ גאולה וישועה<small>לחץ לכניסה לערוץ ביוטיוב ▶</small></span></button>
@@ -2928,6 +2998,8 @@
       <button class="fi" data-f="music" id="shFabMusic">🎵<span>ניגון ברקע</span></button>
       <button class="fi" data-f="random">🎲<span>פתיחה אקראית</span></button>
       <button class="fi" data-f="settings">⚙️<span>הגדרות</span></button>
+      <button class="fi" data-f="share">📤<span>שתפו את האפליקציה</span></button>
+      <button class="fi" data-f="ded">🕯️<span>הקדשת הלימוד</span></button>
       <button class="fi" data-f="wa">💬<span>קבוצת הוואטסאפ</span></button>
       <button class="fi" data-f="wainfo">❔<span>מה זו הקבוצה?</span></button>
       <button class="fi wide" data-f="admin" style="min-height:46px">🚪<span style="font-size:12.5px;color:var(--ink-soft)">גישת עריכה</span></button>
@@ -4041,6 +4113,8 @@
   const snakeGameEl = document.getElementById('snakeGame');
   const GAME_VIEW_ELS = { tetrisGame: tetrisGameEl, classicTetris: classicTetrisEl, wheelGame: wheelGameEl, wordOrderGame: wordOrderGameEl, runnerGame: runnerGameEl, snakeGame: snakeGameEl };
   function showView(name){
+    document.body.dataset.shv = name;
+    if(window.__shHkSync) setTimeout(window.__shHkSync, 0);
     landingEl.style.display = name==='landing' ? 'flex' : 'none';
     homeEl.style.display = name==='home' ? 'block' : 'none';
     if(name==='home'){
@@ -7081,6 +7155,8 @@
       else if(f === 'wa') window.open(document.getElementById('whatsappLink').href, '_blank');
       else if(f === 'wainfo') document.getElementById('whatsappInfoBtn').click();
       else if(f === 'admin') document.getElementById('adminDoorBtn').click();
+      else if(f === 'share' && window.shShareApp) window.shShareApp();
+      else if(f === 'ded' && window.shDedicate) window.shDedicate();
     }));
     document.getElementById('settingsCloseX').addEventListener('click', ()=> document.getElementById('settingsClose').click());
   })();
@@ -15059,6 +15135,235 @@ tznBody._tznRerender = tznRender;
       });
     }
     window.__midotBot = { respond: t => handle(t), search: searchSimanim, findTopicInQuery, findSimanInQuery, bNorm };
+  })();
+
+
+  // ================= שיתוף האפליקציה + פס דיבורים רץ + פס הקדשות =================
+  (function initShareTickers(){
+    const APP_URL = 'https://emona501-prog.github.io/sefer-hamidot/';
+    const WA_PHONE = '972546137202';
+    const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+    const lsGet = (k, d)=>{ try{ const v = localStorage.getItem(k); return v == null ? d : JSON.parse(v); }catch(e){ return d; } };
+    const lsSet = (k, v)=>{ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} };
+    const openUrl = u => { try{ window.open(u, '_blank'); }catch(e){ location.href = u; } };
+
+    function sheet(html){
+      const ov = document.createElement('div'); ov.className = 'shx-ov';
+      ov.innerHTML = '<div class="shx-sheet"><button type="button" class="shx-x" aria-label="סגור">✕</button>' + html + '</div>';
+      const close = ()=> ov.remove();
+      ov.addEventListener('click', e=>{ if(e.target === ov) close(); });
+      ov.querySelector('.shx-x').onclick = close;
+      document.body.appendChild(ov);
+      ov.close = close;
+      return ov;
+    }
+
+    // ---------- שיתוף האפליקציה ----------
+    const SHARE_TEXT =
+      '📗 *ספר המידות* — רבי נחמן מברסלב\n' +
+      'כל הסימנים עם הסבר פשוט ומקורות, עוזר חכם, הקראה בקול, קונטרס האמירות, לוח הילולות ועוד — בחינם, לזיכוי הרבים.\n\n' +
+      '👈 ' + APP_URL + '\n\n' +
+      '📲 *איך הופכים את זה לאייקון במסך הבית?*\n' +
+      '▪️ *אנדרואיד (כרום):* פותחים את הקישור ← לוחצים על ⋮ למעלה ← "הוספה למסך הבית" (או "התקנת אפליקציה") ← "הוספה".\n' +
+      '▪️ *אייפון (ספארי):* פותחים את הקישור בספארי ← כפתור השיתוף ⬆️ למטה ← "הוסף למסך הבית" ← "הוסף".\n' +
+      '▪️ *מחשב (כרום / אדג\'):* לוחצים על סמל ההתקנה ⊕ בצד שורת הכתובת.\n\n' +
+      'מעכשיו האפליקציה תיפתח ישר מהאייקון, כמו כל אפליקציה 🙏';
+    function shareApp(){
+      const text = SHARE_TEXT;
+      const ov = sheet(
+        '<div class="shx-hd">📤</div><h3>שתפו את ספר המידות</h3>' +
+        '<div class="shx-sub" style="text-align:center">"כל המזכה את הרבים — אין חטא בא על ידו". ההודעה כוללת את הקישור והסבר איך להוסיף אייקון למסך הבית.</div>' +
+        '<div class="shx-intro" style="white-space:pre-line;max-height:190px;overflow:auto">' + esc(text.replace(/\*/g, '')) + '</div>' +
+        (navigator.share ? '<button class="shx-btn" data-s="native">📤 שיתוף… (בחירת אפליקציה)</button>' : '') +
+        '<div class="shx-grid">' +
+          '<button class="shx-btn alt" data-s="wa">💬 וואטסאפ</button>' +
+          '<button class="shx-btn alt" data-s="tg">✈️ טלגרם</button>' +
+          '<button class="shx-btn alt" data-s="mail">✉️ מייל</button>' +
+          '<button class="shx-btn alt" data-s="sms">📱 SMS</button>' +
+        '</div>' +
+        '<button class="shx-btn alt" data-s="copy">📋 העתקת ההודעה</button>');
+      ov.querySelectorAll('[data-s]').forEach(b=> b.onclick = ()=>{
+        const k = b.dataset.s, plain = text.replace(/\*/g, '');
+        if(k === 'native'){ navigator.share({ title:'ספר המידות', text: plain }).then(()=> ov.close()).catch(()=>{}); return; }
+        if(k === 'wa') openUrl('https://wa.me/?text=' + encodeURIComponent(text));
+        else if(k === 'tg') openUrl('https://t.me/share/url?url=' + encodeURIComponent(APP_URL) + '&text=' + encodeURIComponent(plain.replace(APP_URL, '').replace('👈 \n', '')));
+        else if(k === 'mail') location.href = 'mailto:?subject=' + encodeURIComponent('ספר המידות — אפליקציה בחינם') + '&body=' + encodeURIComponent(plain);
+        else if(k === 'sms') location.href = 'sms:?&body=' + encodeURIComponent(plain);
+        else if(k === 'copy'){ try{ (navigator.clipboard ? navigator.clipboard.writeText(plain) : Promise.reject()).catch(()=> copyToClipboard(plain)); }catch(e){ copyToClipboard(plain); } toast('ההודעה הועתקה — אפשר להדביק בכל מקום'); }
+        ov.close();
+      });
+    }
+    window.shShareApp = shareApp;
+    const sb = document.getElementById('btnShareApp'); if(sb) sb.addEventListener('click', shareApp);
+
+    // ---------- פס דיבורים רץ למעלה ----------
+    const TK_NEG = /(קרי|הרהור|חולא|חולאת|מחלה|עריות|ניאוף|נואף|זנות|נופל|מתים|מיתה|ימות|נחרב|חרבן|עונש|נענש|יסורים|ייסורים|חולי|חלאים|שונא|שנאה|עניות|גזר ?דין|אסור|כופר|כפירה|כפירות|אפיקורס|רשע|מגפה|שדים|מזיקים|רציחה|גנב|עבודה זרה|קללה|מקלל|עקרה|שכול|עכו"?ם|מי שאין|שאין לו|נעשה רש)/;
+    let quotePool = null, curQuote = null, quoteT = null;
+    const recentQ = [];
+    function buildPool(){
+      quotePool = [];
+      DATA.forEach(t => (t.items || []).forEach(it => {
+        const pl = String(it.plain || stripNiqud(it.text || '')).trim();
+        if(pl.length < 18 || pl.length > 130) return;
+        if(TK_NEG.test(pl)) return;
+        quotePool.push({ t, it });
+      }));
+    }
+    function pickQuote(){
+      if(!quotePool) buildPool();
+      if(!quotePool.length) return null;
+      for(let k = 0; k < 8; k++){
+        const q = quotePool[Math.floor(Math.random() * quotePool.length)];
+        if(!recentQ.includes(q.it.id)){ recentQ.push(q.it.id); if(recentQ.length > 30) recentQ.shift(); return q; }
+      }
+      return quotePool[Math.floor(Math.random() * quotePool.length)];
+    }
+    function runTicker(el, html, speed, onEnd){
+      const run = el.querySelector('.tk-run'), win = el.querySelector('.tk-win');
+      run.innerHTML = html;
+      run.style.animation = 'none'; void run.offsetWidth;
+      const W = win.clientWidth;
+      if(!W){ return false; }
+      const RW = run.scrollWidth || 600;
+      run.style.setProperty('--a', -RW + 'px'); run.style.setProperty('--b', W + 'px');
+      run.style.animation = 'shTkRun ' + Math.max(7, (W + RW) / speed).toFixed(1) + 's linear 1';
+      run.onanimationend = onEnd;
+      return true;
+    }
+    function quoteTick(){
+      clearTimeout(quoteT);
+      const el = document.getElementById('shQuoteTick');
+      if(!el) return;
+      if(settings && settings.quoteTicker === false){ el.hidden = true; return; }
+      const q = pickQuote();
+      if(!q){ el.hidden = true; return; }
+      el.hidden = false;
+      curQuote = q;
+      const txt = String(q.it.text || q.it.plain || '').replace(/\s+/g, ' ').trim();
+      const src = stripNiqud(q.t.name || '') + ' · סימן ' + (q.it.part > 1 ? 'חלק שני ' : '') + (q.it.siman || '');
+      const ok = runTicker(el, '<b>' + esc(txt) + '</b><small> · ' + esc(src) + '</small>', 55, ()=>{ quoteT = setTimeout(quoteTick, 1200); });
+      if(!ok) quoteT = setTimeout(quoteTick, 2500);
+    }
+    const qel = document.getElementById('shQuoteTick');
+    if(qel) qel.addEventListener('click', ()=>{ if(curQuote){ try{ openTopic(curQuote.t.id, curQuote.it.id); }catch(e){} } });
+    setTimeout(quoteTick, 1200);
+
+    // ---------- הקדשות (מאגר משותף עם ברסלב PRO) ----------
+    const HK_URL = 'https://raw.githubusercontent.com/emona501-prog/breslever-pro/main/live/edits.json';
+    const LS_HK = 'sh_hk_live';
+    const HK_TY = [
+      ['rf','לרפואת','🙏','לרפואה שלמה'], ['ln','לעילוי נשמת','🕯️','לעילוי נשמת'], ['hz','להצלחת','🌟','להצלחה'],
+      ['ys','לישועת','✨','לישועה'], ['zv','לזיווג הגון ל','💍','לזיווג הגון'], ['zk','לזרע של קיימא ל','👶','לזרע של קיימא'], ['pr','לפרנסה טובה ל','💰','לפרנסה']
+    ];
+    const HK_PER = [ ['d','יום אחד',18,1,'24 שעות'], ['w','שבוע',101,7,'7 ימים'], ['m','חודש',360,30,'30 יום'] ];
+    let hkLive = lsGet(LS_HK, {}) || {};
+    let hkT = null;
+    const hkActive = ()=>{ const now = Date.now(); return (hkLive.hk || []).filter(h => h && h.u > now && (h.s || 0) <= now + 6e4 && Array.isArray(h.n) && h.n.length); };
+    const hkLine = h => { const T = HK_TY.find(t => t[0] === h.t) || HK_TY[0]; return T[1] + (/ ל$/.test(T[1]) ? '' : ' ') + h.n.join(', '); };
+    function hkSync(){
+      const v = document.body.dataset.shv;
+      const show = document.body.classList.contains('hk-on') && (!v || v === 'landing' || v === 'home');
+      document.body.classList.toggle('hk-show', show);
+      if(show && !el_running()) hkTick();
+    }
+    const el_running = ()=>{ const r = document.querySelector('#shHkBar .tk-run'); return !!(r && r.innerHTML && r.style.animation && r.style.animation !== 'none' && hkRunning); };
+    let hkRunning = false;
+    window.__shHkSync = hkSync;
+    function hkTick(){
+      clearTimeout(hkT);
+      const el = document.getElementById('shHkBar');
+      if(!el) return;
+      if(!document.body.classList.contains('hk-show')) return;
+      const A = hkActive();
+      const html = A.length
+        ? '<span class="hk-l">🕯️ הלימוד היום מוקדש</span>' + A.map(h => '<b>' + esc(hkLine(h)) + '</b>').join('<i>✦</i>')
+        : '<b>🕯️ הקדישו את הלימוד — לרפואה, לעילוי נשמת, להצלחה ולישועה</b><i>✦</i><span>18 ₪ לשם · לחצו כאן להקדשה</span>';
+      hkRunning = true;
+      const ok = runTicker(el, html, 60, ()=>{ hkRunning = false; hkT = setTimeout(hkTick, 900); });
+      if(!ok){ hkRunning = false; hkT = setTimeout(hkTick, 3000); }
+    }
+    function hkFetch(){
+      fetch(HK_URL + '?t=' + Math.floor(Date.now() / 6e4), { cache:'no-store' })
+        .then(r => r.ok ? r.json() : null)
+        .then(j => { if(j){ const before = JSON.stringify(hkActive().map(h=>h.id)); hkLive = { hk: j.hk || [], hkPay: j.hkPay || {} }; lsSet(LS_HK, hkLive); if(!hkRunning || JSON.stringify(hkActive().map(h=>h.id)) !== before){ hkRunning = false; hkTick(); } } })
+        .catch(()=>{});
+    }
+    document.getElementById('shHkBar').addEventListener('click', ()=> hkForm());
+    setTimeout(()=>{ document.body.classList.add('hk-on'); hkSync(); }, 1800);
+    setTimeout(hkFetch, 2500);
+    setInterval(hkFetch, 10 * 60 * 1000);
+
+    const HK_BLESS = t => '<div class="shx-bless">' + (t === 'ln'
+      ? 'יהי רצון שבזכות הלימוד בספר המידות תתעלה נשמת יקיריכם מעלה מעלה, ותזכו אתם וכל בני ביתכם לכל הישועות — אמן!'
+      : 'יהי רצון שבזכות הלימוד בספר המידות תזכו אתם וכל יקיריכם לרפואה שלמה, לשמחה, לפרנסה בהרחבה ולכל הישועות — אמן!') + '</div>';
+    function parseNames(txt){
+      const out = [], seen = {};
+      String(txt || '').replace(/[״“”]/g, '"').split(/\n|,|;/).forEach(line => {
+        const n = line.replace(/^\s*(ו?ל?רפואת|ו?לע"נ|ו?לעילוי נשמת|ו?ל?הצלחת|ו?ל?ישועת)\s+/, '').replace(/\s+/g, ' ').trim();
+        if(!n) return;
+        const k = n.replace(/["'\s]/g, '');
+        if(seen[k]) return; seen[k] = 1; out.push(n);
+      });
+      return out;
+    }
+    function hkReqTxt(q){
+      const per = HK_PER.find(t => t[0] === q.p) || HK_PER[0];
+      return '🕯️ ' + hkLine(q) + '\n⏱️ ' + per[1] + ' · ' + q.n.length + (q.n.length === 1 ? ' שם' : ' שמות') + ' · ' + q.sum + ' ₪' + (q.by ? '\n👤 המקדיש: ' + q.by : '');
+    }
+    function hkForm(){
+      const S = { t:'rf', p:'d' };
+      const ov = sheet(
+        '<div class="shx-hd">🕯️</div><h3>הקדשת הלימוד</h3>' +
+        '<div class="shx-intro"><b>אשריך!</b> בחרת להקדיש את הלימוד בספר המידות עבור יקיריך. כל סימן שנלמד, כל אמירה וכל תפילה — עולים לזכותם.<br>השמות יופיעו בפס בתחתית המסך אצל כל הלומדים — בספר המידות ובברסלב PRO.</div>' +
+        '<div class="shx-lbl">מטרת ההקדשה</div><div class="shx-chips" id="hxTy">' + HK_TY.map(t => '<button type="button" data-v="' + t[0] + '"' + (t[0] === 'rf' ? ' class="on"' : '') + '>' + t[2] + ' ' + t[3] + '</button>').join('') + '</div>' +
+        '<div class="shx-lbl">השמות</div><textarea id="hxN" rows="3" maxlength="300" placeholder="כל שם בשורה נפרדת, למשל:&#10;יצחק בן שרה&#10;רחל בת לאה"></textarea>' +
+        '<div class="shx-sub">שם + בן/בת + שם האם (לעילוי נשמת — שם האב). כל שורה נספרת כשם אחד.</div>' +
+        '<div class="shx-lbl">משך ההקדשה</div><div class="shx-chips" id="hxPer">' + HK_PER.map(t => '<button type="button" data-v="' + t[0] + '"' + (t[0] === 'd' ? ' class="on"' : '') + '>' + t[1] + '<small>' + t[2] + ' ₪ לשם · ' + t[4] + '</small></button>').join('') + '</div>' +
+        '<div class="shx-sum" id="hxSum" style="display:none"></div>' +
+        '<div class="shx-lbl">שם המקדיש (לא חובה, לא יוצג בפס)</div><input id="hxBy" maxlength="60" placeholder="לתיאום ולאישור התשלום">' +
+        '<button type="button" class="shx-btn" id="hxGo" style="margin-top:14px">💳 המשך לתשלום</button>' + HK_BLESS('rf'));
+      const R = ()=>{
+        const n = parseNames(ov.querySelector('#hxN').value), per = HK_PER.find(t => t[0] === S.p), sum = n.length * per[2];
+        const el = ov.querySelector('#hxSum');
+        el.style.display = n.length ? 'block' : 'none';
+        el.innerHTML = '<b>' + n.length + (n.length === 1 ? ' שם' : ' שמות') + ' × ' + per[2] + ' ₪ = ' + sum.toLocaleString('he-IL') + ' ₪</b><small>' + esc(n.join(' · ')) + '</small>';
+        S.n = n; S.sum = sum;
+      };
+      ov.querySelector('#hxN').addEventListener('input', R);
+      [['#hxTy','t'],['#hxPer','p']].forEach(([id, k]) => ov.querySelectorAll(id + ' button').forEach(b => b.onclick = ()=>{
+        ov.querySelectorAll(id + ' button').forEach(x => x.classList.toggle('on', x === b)); S[k] = b.dataset.v; R();
+        if(k === 't') ov.querySelector('.shx-bless').outerHTML = HK_BLESS(S.t);
+      }));
+      ov.querySelector('#hxGo').onclick = ()=>{
+        R();
+        if(!S.n || !S.n.length){ toast('כתבו את השמות להקדשה'); return; }
+        if(/[a-zA-Z0-9@\/]/.test(S.n.join(' '))){ toast('כתבו רק שמות בעברית'); return; }
+        if(S.n.length > 30){ toast('לבקשה גדולה — פנו אלינו בוואטסאפ'); return; }
+        const q = { t:S.t, p:S.p, n:S.n, sum:S.sum, by: ov.querySelector('#hxBy').value.trim().slice(0, 60) };
+        ov.close(); setTimeout(()=> hkPay(q), 200);
+      };
+    }
+    function hkPay(q){
+      const P = hkLive.hkPay || {};
+      const per = HK_PER.find(t => t[0] === q.p) || HK_PER[0];
+      const ov = sheet(
+        '<div class="shx-hd">💳</div><h3>תשלום ההקדשה</h3>' +
+        '<div class="shx-sum"><b>' + q.sum.toLocaleString('he-IL') + ' ₪</b><small>' + esc(hkReqTxt(q)) + '</small></div>' +
+        ((P.bit || P.pb) ? '<div class="shx-row">' + (P.bit ? '<button type="button" class="shx-btn" id="hxBit">💙 תשלום בביט</button>' : '') + (P.pb ? '<button type="button" class="shx-btn" id="hxPb">💚 תשלום בפייבוקס</button>' : '') + '</div>' : '') +
+        '<div class="shx-sub" style="margin:10px 0">' + ((P.bit || P.pb) ? 'אחרי התשלום לחצו על הכפתור למטה ושלחו בוואטסאפ את אישור התשלום.' : 'לתשלום — שלחו את ההקדשה בוואטסאפ, ונחזור אליכם עם פרטי התשלום.') +
+        ' ההקדשה תעלה לפס מיד כשהתשלום מאושר, והזמן (' + per[4] + ') נספר מרגע העלייה.</div>' +
+        '<button type="button" class="shx-btn" id="hxSend">📨 שליחת ההקדשה בוואטסאפ</button>' + HK_BLESS(q.t));
+      if(P.bit) ov.querySelector('#hxBit').onclick = ()=> openUrl(P.bit);
+      if(P.pb) ov.querySelector('#hxPb').onclick = ()=> openUrl(P.pb);
+      ov.querySelector('#hxSend').onclick = ()=>{
+        openUrl('https://wa.me/' + WA_PHONE + '?text=' + encodeURIComponent('שלום, הקדשה בספר המידות:\n' + hkReqTxt(q) + ((P.bit || P.pb) ? '\n\n✅ שילמתי — מצרף אישור תשלום' : '\n\nאשמח לפרטי תשלום')));
+        ov.close();
+        setTimeout(()=> sheet('<div class="shx-hd">🙏</div><h3>תודה רבה!</h3><div class="shx-intro" style="text-align:center">ההקדשה נשלחה. מיד כשהתשלום יאושר, השמות יעלו לפס בתחתית המסך אצל כל הלומדים.</div>' + HK_BLESS(q.t)), 300);
+      };
+    }
+    window.shDedicate = hkForm;
+    const db = document.getElementById('btnDedicate'); if(db) db.addEventListener('click', hkForm);
+    window.__shTickers = { quoteTick, hkTick, hkFetch, hkForm, shareApp, parseNames, get live(){ return hkLive; }, set live(v){ hkLive = v; } };
   })();
 
   // ================= ביאורים מרכזיים + שיתוף מקורות =================
