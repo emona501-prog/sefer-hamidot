@@ -14861,10 +14861,36 @@ tznBody._tznRerender = tznRender;
       { re: /(רשימת הערכים|כל הערכים|תוכן העניינים|דף הבית של הספר)/, say: 'הנה כל הערכים של הספר 📚', run: ()=>{ togglePanel(false); showView('home'); } }
     ];
 
-    function randomPick(){
+    let lastChizukTopic = ''; const recentChizuk = [];
+    const CHZ_NEG = /(קרי|הרהור|עריות|ניאוף|נואף|זנות|נופל|נפל |מת |מתים|מיתה|ימות|נחרב|חרבן|עונש|נענש|יסורים|ייסורים|חולי|חולאים|חלאים|שונא|שנאה|עני |עניות|גזרדין|גזר דין|חס ושלום|חו"ש|אסור|נאסר|כופר|כפירה|אפיקורס|רשע|רשעים|מגפה|דבר |שד |שדים|מזיקים|נרצח|רציחה|גנב|שקר|כעס|גאוה|עבודה זרה|עבודת אלילים|בזיון|קללה|מקלל|עקרה|שכול|מפלה|עכום|עכו"ם|עובדי כוכבים|גלות|מי שאין|שאין לו|שלא תקן|נעשה רש|כפירות)/;
+    const goodChizuk = it => it.peshat && !/מקור מפורש לא נמצא/.test(it.harchava || '') && !CHZ_NEG.test(stripNiqud(it.plain || it.text || ''));
+    function pickFrom(pool){
+      if(!pool.length) return null;
+      const fresh = pool.filter(p => !recentChizuk.includes(p.it.id));
+      const src = fresh.length ? fresh : pool;
+      const r = src[Math.floor(Math.random() * src.length)];
+      recentChizuk.push(r.it.id); if(recentChizuk.length > 12) recentChizuk.shift();
+      return r;
+    }
+    function randomPick(about){
+      about = String(about || '').trim();
+      if(about){
+        const t = findTopicInQuery(about);
+        if(t){
+          let pool = t.items.filter(it => goodChizuk(it) && (it.plain || '').length <= 140).map(it => ({ t, it }));
+          if(!pool.length) pool = t.items.filter(goodChizuk).map(it => ({ t, it }));
+          if(!pool.length) pool = t.items.map(it => ({ t, it }));
+          const r = pickFrom(pool); if(r) return r;
+        }
+        const found = searchSimanim(about, { limit: 12 }).filter(rec => goodChizuk(rec.it));
+        if(found.length) return pickFrom(found.map(rec => ({ t: rec.t, it: rec.it })));
+        return null;
+      }
       const pool = [];
-      DATA.forEach(t => t.items.forEach(it => { if(it.peshat && (it.plain || '').length <= 110 && !/מקור מפורש לא נמצא/.test(it.harchava || '')) pool.push({ t, it }); }));
-      return pool[Math.floor(Math.random() * pool.length)];
+      const POS = /^(שמחה|אמונה|בטחון|תפלה|תורה|צדיק|צדקה|תשובה|ענוה|שלום|אמת|התבודדות|זכות|קדושה|ארץ ישראל|שבת|חסד|רחמים|ישועה|משיח|מוחין|לימוד)$/;
+      DATA.forEach(t => { if(!POS.test(stripNiqud(t.name || '').trim())) return; t.items.forEach(it => { if(goodChizuk(it) && (it.plain || '').length <= 110) pool.push({ t, it }); }); });
+      if(!pool.length) DATA.forEach(t => t.items.forEach(it => { if(goodChizuk(it) && (it.plain || '').length <= 110) pool.push({ t, it }); }));
+      return pickFrom(pool);
     }
 
     function openFullSearch(){
@@ -14912,12 +14938,18 @@ tznBody._tznRerender = tznRender;
 
       // חיזוק / אקראי
       if(/(חזק|חיזק|אקראי|אקראית|הפתע|מילה טבה|משהו טב|הגרל)/.test(qs) && !/(פתח|ערכ)/.test(qs.replace('אקראי',''))){
-        const r = randomPick();
+        const CHZ = /^(ו?תן|ו?תני|לי|קצת|משהו|בבקשה|עוד|אחד|אחת|ב?חיזוק|ב?חזוק|חיזוקים|תחזק|תחזקי|אותי|סימן|סימנים|ב?אקראי|ב?אקראית|תפתיע|הפתע|הפתעה|מילה|טובה|תגריל|הגרל|על|בעניין|בענין|בנושא|של|מ?ערך|את)$/;
+        let about = qr.split(' ').filter(w => w && !CHZ.test(w)).join(' ');
+        if(/^עוד/.test(qr) && !about) about = lastChizukTopic;
+        let r = randomPick(about);
+        let note = '';
+        if(!r && about){ note = 'לא מצאתי חיזוק מדויק בנושא הזה, אז הנה חיזוק כללי:'; about = ''; r = randomPick(''); }
+        lastChizukTopic = about;
         if(r){
-          addMsg('bot', '🌟 הנה חיזוק בשבילך:');
+          addMsg('bot', note || ('🌟 הנה חיזוק בשבילך' + (about ? ' — ' + escapeHtml(r.t.name ? stripNiqud(r.t.name) : about) : '') + ':'));
           showResults('', [r]);
           const last = log.lastElementChild; const b = last && last.querySelector('[data-a="biur"]'); if(b) b.click();
-          setChips(['עוד חיזוק', 'מה עושים נגד עצבות?', 'פתח ערך שמחה']);
+          setChips([about ? 'עוד חיזוק' : 'עוד חיזוק', 'חיזוק באמונה', 'חיזוק בשמחה', 'מה עושים נגד עצבות?']);
         }
         return;
       }
