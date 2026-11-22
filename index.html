@@ -15638,6 +15638,7 @@ tznBody._tznRerender = tznRender;
     const el_running = ()=>{ const r = document.querySelector('#shHkBar .tk-run'); return !!(r && r.innerHTML && r.style.animation && r.style.animation !== 'none' && hkRunning); };
     let hkRunning = false;
     window.__shHkSync = hkSync;
+    const hkWhen = h => { const d = ((h.u || 0) - (h.s || 0)) / 864e5; return d <= 2 ? 'הלימוד היום מוקדש' : d <= 10 ? 'הלימוד השבוע מוקדש' : d <= 45 ? 'הלימוד החודש מוקדש' : 'הלימוד מוקדש'; };
     function hkTick(){
       clearTimeout(hkT);
       const el = document.getElementById('shHkBar');
@@ -15645,7 +15646,7 @@ tznBody._tznRerender = tznRender;
       if(!document.body.classList.contains('hk-show')) return;
       const A = hkActive();
       const html = A.length
-        ? '<span class="hk-l">🕯️ הלימוד היום מוקדש</span>' + A.map(h => '<b>' + esc(hkLine(h)) + '</b>').join('<i>✦</i>')
+        ? A.map(h => (h.t === 'fr' ? '' : '<span class="hk-l">🕯️ ' + hkWhen(h) + '</span>') + '<b>' + esc(hkLine(h)) + '</b>').join('<i>✦</i>')
         : '<b>🕯️ הקדישו את הלימוד — לרפואה, לעילוי נשמת, להצלחה ולישועה</b><i>✦</i><span>18 ₪ לשם · לחצו כאן להקדשה</span>';
       hkRunning = true;
       const ok = runTicker(el, html, 60, ()=>{ hkRunning = false; hkT = setTimeout(hkTick, 900); });
