@@ -355,7 +355,7 @@
   #shHkBar .tk-run b{ color:#FFE3A0; font-weight:600; }
   #shHkBar .tk-run i{ font-style:normal; margin:0 12px; opacity:.7; }
   #shHkBar .hk-l{ margin-inline-end:10px; opacity:.9; }
-  body.hk-on:not([data-shv]) #shHkBar, body.hk-on[data-shv="landing"] #shHkBar, body.hk-on[data-shv="home"] #shHkBar{ display:flex; }
+  body.hk-show #shHkBar{ display:flex; }
   body.hk-show #app{ padding-bottom:34px; }
   body.hk-show #shFab{ bottom:calc(52px + env(safe-area-inset-bottom,0px)); }
   body.hk-show #midotBotFab:not([style*="top"]){ bottom:calc(52px + env(safe-area-inset-bottom,0px)); }
@@ -15631,7 +15631,8 @@ tznBody._tznRerender = tznRender;
 
     function hkSync(){
       const v = document.body.dataset.shv;
-      const show = document.body.classList.contains('hk-on') && (!v || v === 'landing' || v === 'home');
+      // במסך הבית – תמיד (גם ההזמנה להקדיש); בתוך הספר – רק כשיש הקדשות פעילות
+      const show = document.body.classList.contains('hk-on') && (!v || v === 'landing' || v === 'home' || hkActive().length > 0);
       document.body.classList.toggle('hk-show', show);
       if(show && !el_running()) hkTick();
     }
@@ -15655,7 +15656,7 @@ tznBody._tznRerender = tznRender;
     function hkFetch(){
       fetch(HK_URL + '?t=' + Math.floor(Date.now() / 6e4), { cache:'no-store' })
         .then(r => r.ok ? r.json() : null)
-        .then(j => { if(j){ const before = JSON.stringify(hkActive().map(h=>h.id)); hkLive = { hk: j.hk || [], hkPay: j.hkPay || {} }; lsSet(LS_HK, hkLive); if(!hkRunning || JSON.stringify(hkActive().map(h=>h.id)) !== before){ hkRunning = false; hkTick(); } } })
+        .then(j => { if(j){ const before = JSON.stringify(hkActive().map(h=>h.id)); hkLive = { hk: j.hk || [], hkPay: j.hkPay || {} }; lsSet(LS_HK, hkLive); hkSync(); if(!hkRunning || JSON.stringify(hkActive().map(h=>h.id)) !== before){ hkRunning = false; hkTick(); } } })
         .catch(()=>{});
     }
     document.getElementById('shHkBar').addEventListener('click', ()=> hkForm());
