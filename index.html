@@ -14768,6 +14768,7 @@ tznBody._tznRerender = tznRender;
   });
   function unlockAdmin(){
     adminMode = true;
+    try{ localStorage.setItem('sh_gc_skip', '1'); }catch(e){}
     localStorage.setItem(LS_ADMIN_MODE, '1');
     document.getElementById('pinOverlay').classList.remove('show');
     toast('מצב עריכה פעיל');
@@ -15985,6 +15986,23 @@ tznBody._tznRerender = tznRender;
   }
   window.__biurSync = { applyRemoteBiur, fetchRemoteBiur, publishBiurUpdates, openSourceShare, collectLocalBiurEdits };
 
+  // ===== ספירת צפיות וכניסות (GoatCounter — אותו חשבון של ברסלב PRO, תחת הנתיב /sefer-hamidot) =====
+  const GC_SITE = 'bresleverpro';
+  (function initVisitCounter(){
+    try{
+      // המכשיר של המנהל לא נספר, כדי לא לנפח את המספרים
+      if(adminMode) localStorage.setItem('sh_gc_skip', '1');
+      if(localStorage.getItem('sh_gc_skip') === '1') return;
+      if(location.protocol === 'file:' || /^(localhost|127\.|192\.168\.)/.test(location.hostname)) return;
+      window.goatcounter = { path: '/sefer-hamidot', title: 'ספר המידות', allow_local: false };
+      const sc = document.createElement('script');
+      sc.async = true;
+      sc.src = 'https://gc.zgo.at/count.js';
+      sc.dataset.goatcounter = 'https://' + GC_SITE + '.goatcounter.com/count';
+      document.head.appendChild(sc);
+    }catch(e){}
+  })();
+
   function renderAdminBanner(){
     let banner = document.getElementById('adminBanner');
     if(adminMode){
@@ -15998,7 +16016,12 @@ tznBody._tznRerender = tznRender;
             <button type="button" id="adminExportBtn">📦 גיבוי תיקונים</button>
             <button type="button" id="adminImportBtn">📥 שחזור מגיבוי</button>
             <button type="button" id="adminPublishBiurBtn">☁️ פרסם ביאורים לכולם</button>
+            <button type="button" id="adminStatsBtn">📊 צפיות וכניסות</button>
           </div>`;
+        banner.querySelector('#adminStatsBtn').addEventListener('click', (e)=>{
+          e.stopPropagation();
+          try{ window.open('https://' + GC_SITE + '.goatcounter.com/?filter=sefer-hamidot', '_blank'); }catch(err){}
+        });
         banner.querySelector('#adminPublishBiurBtn').addEventListener('click', (e)=>{
           e.stopPropagation();
           publishBiurUpdates();
