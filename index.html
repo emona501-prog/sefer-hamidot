@@ -382,6 +382,13 @@
   .shx-btn{ display:block; width:100%; border:0; border-radius:14px; padding:13px; margin-top:8px; font:700 15.5px var(--font-ui); cursor:pointer; background:var(--maroon-dark); color:#F3E9D2; text-align:center; text-decoration:none; }
   .shx-btn.alt{ background:var(--paper-2); color:var(--maroon-dark); border:1px solid var(--line); }
   .shx-row{ display:flex; gap:8px; } .shx-row .shx-btn{ flex:1; }
+  .hx-q{ background:#fff6e5; border:1px solid #f0c27a; border-radius:12px; padding:9px 11px; margin:8px 0; font-size:14.5px; line-height:1.6; color:#4a3410; }
+  .hx-q.bad{ background:#fdecec; border-color:#e5a0a0; } .hx-q .shx-row{ margin-top:6px; }
+  .shx-btn.sm{ padding:6px 10px; font-size:13.5px; width:auto; }
+  .hx-bit{ text-align:center; font-size:14.5px; margin:10px 0; line-height:1.9; }
+  .hx-in{ width:100%; box-sizing:border-box; padding:8px 10px; border-radius:10px; border:1px solid rgba(169,133,47,.45); font:inherit; margin-bottom:6px; background:var(--paper-2); color:inherit; }
+  .ha-it{ display:flex; align-items:center; gap:6px; padding:8px 0; border-bottom:1px solid rgba(169,133,47,.25); font-size:14px; }
+  .ha-it span{ flex:1; } .ha-it small{ color:var(--ink-soft); } .ha-it button{ border:1px solid rgba(169,133,47,.45); background:none; border-radius:8px; padding:4px 8px; cursor:pointer; }
   .shx-bless{ margin-top:12px; text-align:center; font-size:13px; color:#7a5a18; line-height:1.7; font-weight:600; }
   .shx-x{ position:absolute; margin-top:-6px; inset-inline-end:16px; border:0; background:none; font-size:22px; color:var(--ink-soft); cursor:pointer; }
   .shx-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:8px; margin-top:10px; }
@@ -15543,7 +15550,84 @@ tznBody._tznRerender = tznRender;
     let hkLive = lsGet(LS_HK, {}) || {};
     let hkT = null;
     const hkActive = ()=>{ const now = Date.now(); return (hkLive.hk || []).filter(h => h && h.u > now && (h.s || 0) <= now + 6e4 && Array.isArray(h.n) && h.n.length); };
-    const hkLine = h => { const T = HK_TY.find(t => t[0] === h.t) || HK_TY[0]; return T[1] + (/ ל$/.test(T[1]) ? '' : ' ') + h.n.join(', '); };
+    const hkLine = h => { if(h.t === 'fr') return h.n.join(' · '); const T = HK_TY.find(t => t[0] === h.t) || HK_TY[0]; return T[1] + (/ ל$/.test(T[1]) ? '' : ' ') + h.n.join(', '); };
+    const HK_FREE = ['fr','','✍️','נוסח חופשי'];
+    const HK_PAY0 = { pb:'https://links.payboxapp.com/BiD773Dwv7b', bit:'054-6137202' };
+  // 🕯️ ניתוח שמות להקדשה: כל "בן/בת" = אדם; "בני/בנות" = כל השמות שלפניו; שמות בלי "בן" – שואלים
+  const HK_TITLE = /^(ה?רב|ה?ר'|רבי|ר"?|מוה?ר"ר|הרה"ח|הרה"צ|הצדיק|מרת|מרן|ה?ילד(ה)?|התינוק(ת)?|הבחור|העלמה|האשה|החתן|הכלה|ז"ל|זצ"ל|זצוק"ל|זי"ע|ע"ה|הי"ד|נ"ע|נ"י|שליט"א|שיחי'?|תחי'?|הי"ו|ת"ו|זיע"א)$/;
+  const HK_TYPEW = /^(ל?רפואת|ל?רפואה|שלמה|לע"נ|לעילוי|נשמת|ל?הצלחת|ל?ישועת|לזיווג|הגון|לזש"ק|לזרע|של|קיימא|לפרנסה|טובה|עבור|ל?זכות|ל?שמירת|ול?רפואת|ולע"נ)$/;
+  const HK_GROUP = [/כלל ישראל/, /עם ישראל/, /חיילי צה"?ל/, /חיילי צבא/, /הפצועים/, /החטופים/, /השבויים/, /חולי ישראל/];
+  const HK_FAM = /\s(ו?כל\s)?(ו?משפחת[וה]|ומשפחותיהם|ו?ב"ב|ובני\sבית[וה]|וכל\sבני\sבית[וה]|וכל\sיוצאי\sחלציו|וצאצאי[והם]+)(?=\s|$)/g;
+  function hkParse(txt, ans) {
+    ans = ans || {};
+    const P = [],
+      Q = [],
+      bad = [];
+    let fam = 0;
+    const famW = [];
+    String(txt || "")
+      .replace(/[״“”]/g, '"')
+      .replace(/[׳‘’`]/g, "'")
+      .split(/\n|;/)
+      .forEach((line, li) => {
+        line = " " + line.replace(/[,.()\-–:!?]/g, " ").replace(/\s+/g, " ").trim() + " ";
+        line = line.replace(HK_FAM, (m) => (fam++, famW.push(m.trim()), " "));
+        HK_GROUP.forEach((g) => {
+          line = line.replace(g, (m) => (P.push({ n: m.replace(/"/g, '"'), grp: 1 }), " "));
+        });
+        if (/[a-zA-Z0-9@\/]/.test(line)) bad.push(line.trim());
+        let T = line.trim().split(" ").filter((t) => t && !HK_TITLE.test(t));
+        // מילות ההקדשה בתחילת השורה ("לרפואת", "לע"נ" ...)
+        while (T.length && HK_TYPEW.test(T[0])) T.shift();
+        T = T.filter((t) => !HK_TYPEW.test(t) || /^(בן|בת)$/.test(t));
+        let cur = [],
+          gi = 0;
+        const flush = (mo, plural) => {
+          if (!cur.length) return;
+          const key = li + ":" + gi++ + ":" + cur.join(" ");
+          if (plural) cur.forEach((n) => P.push({ n: n.replace(/^ו(?=..)/, "") + (mo ? " " + (plural === "בנות" ? "בת" : "בן") + " " + mo : "") }));
+          else if (cur.length > 1) {
+            // כמה שמות לפני "בן" אחד – אדם אחד עם כמה שמות, או כמה אנשים?
+            const q = { key, names: cur.slice(), mo, conn: plural };
+            if (ans[key] === "many") cur.forEach((n) => P.push({ n: n.replace(/^ו(?=..)/, "") + (mo ? " " + mo : "") }));
+            else (ans[key] !== "one" && Q.push(q), P.push({ n: cur.join(" ") + (mo ? " " + mo : ""), q: ans[key] !== "one" ? key : null }));
+          } else P.push({ n: cur[0].replace(/^ו(?=..)/, "") + (mo ? " " + mo : "") });
+          cur = [];
+        };
+        for (let i = 0; i < T.length; i++) {
+          const t = T[i];
+          if (/^(בן|בת|ובן|ובת)$/.test(t) && cur.length && i + 1 < T.length) {
+            // "בן X" – שם האם/האב הוא המילה הבאה
+            flush(t.replace(/^ו/, "") + " " + T[i + 1], null);
+            i++;
+          } else if (/^(בני|בנות)$/.test(t) && cur.length && i + 1 < T.length) {
+            flush(T[i + 1], t);
+            i++;
+          } else cur.push(t);
+        }
+        // שמות בסוף השורה בלי "בן" אחרי אדם קודם: אולי המשך של שם האם ("בן שרה רבקה")
+        if (cur.length && gi > 0 && P.length) {
+          const key = li + ":t:" + cur.join(" "),
+            last = P[P.length - 1];
+          if (ans[key] === "cont") ((last.n += " " + cur.join(" ")), (cur = []));
+          else if (ans[key] !== "sep") (Q.push({ key, tail: 1, names: cur.slice(), prev: last.n }), (last.q = key), (last.n += " " + cur.join(" ")), (cur = []));
+        }
+        flush("", null);
+      });
+    // כפילויות
+    const seen = {},
+      U = [];
+    let dup = 0;
+    P.forEach((p) => {
+      const k = p.n.replace(/["'\s]/g, "");
+      seen[k] ? dup++ : ((seen[k] = 1), U.push(p));
+    });
+    fam && U.push({ n: famW.join(" ").replace(/^ו?(כל\s)?/, "ו$1"), fam: fam });
+    const units = U.reduce((s, p) => s + (p.fam || 1), 0);
+    return { P: U, Q, units, dup, bad };
+  }
+
+
     function hkSync(){
       const v = document.body.dataset.shv;
       const show = document.body.classList.contains('hk-on') && (!v || v === 'landing' || v === 'home');
@@ -15592,7 +15676,8 @@ tznBody._tznRerender = tznRender;
     }
     function hkReqTxt(q){
       const per = HK_PER.find(t => t[0] === q.p) || HK_PER[0];
-      return '🕯️ ' + hkLine(q) + '\n⏱️ ' + per[1] + ' · ' + q.n.length + (q.n.length === 1 ? ' שם' : ' שמות') + ' · ' + q.sum + ' ₪' + (q.by ? '\n👤 המקדיש: ' + q.by : '');
+      const u = q.u || q.n.length;
+      return '🕯️ ' + hkLine(q) + '\n⏱️ ' + per[1] + ' · ' + u + (u === 1 ? ' שם' : ' שמות') + ' · ' + q.sum + ' ₪' + (q.by ? '\n👤 המקדיש: ' + q.by : '');
     }
     function hkForm(){
       const S = { t:'rf', p:'d' };
@@ -15601,17 +15686,28 @@ tznBody._tznRerender = tznRender;
         '<div class="shx-intro"><b>אשריך!</b> בחרת להקדיש את הלימוד בספר המידות עבור יקיריך. כל סימן שנלמד, כל אמירה וכל תפילה — עולים לזכותם.<br>השמות יופיעו בפס בתחתית המסך אצל כל הלומדים — בספר המידות ובברסלב PRO.</div>' +
         '<div class="shx-lbl">מטרת ההקדשה</div><div class="shx-chips" id="hxTy">' + HK_TY.map(t => '<button type="button" data-v="' + t[0] + '"' + (t[0] === 'rf' ? ' class="on"' : '') + '>' + t[2] + ' ' + t[3] + '</button>').join('') + '</div>' +
         '<div class="shx-lbl">השמות</div><textarea id="hxN" rows="3" maxlength="300" placeholder="כל שם בשורה נפרדת, למשל:&#10;יצחק בן שרה&#10;רחל בת לאה"></textarea>' +
-        '<div class="shx-sub">שם + בן/בת + שם האם (לעילוי נשמת — שם האב). כל שורה נספרת כשם אחד.</div>' +
+        '<div class="shx-sub">שם + בן/בת + שם האם (לעילוי נשמת — שם האב). כל שם בשורה נפרדת.</div><div id="hxAn"></div>' +
         '<div class="shx-lbl">משך ההקדשה</div><div class="shx-chips" id="hxPer">' + HK_PER.map(t => '<button type="button" data-v="' + t[0] + '"' + (t[0] === 'd' ? ' class="on"' : '') + '>' + t[1] + '<small>' + t[2] + ' ₪ לשם · ' + t[4] + '</small></button>').join('') + '</div>' +
         '<div class="shx-sum" id="hxSum" style="display:none"></div>' +
         '<div class="shx-lbl">שם המקדיש (לא חובה, לא יוצג בפס)</div><input id="hxBy" maxlength="60" placeholder="לתיאום ולאישור התשלום">' +
         '<button type="button" class="shx-btn" id="hxGo" style="margin-top:14px">💳 המשך לתשלום</button>' + HK_BLESS('rf'));
+      S.ans = {};
       const R = ()=>{
-        const n = parseNames(ov.querySelector('#hxN').value), per = HK_PER.find(t => t[0] === S.p), sum = n.length * per[2];
+        const r = hkParse(ov.querySelector('#hxN').value, S.ans), per = HK_PER.find(t => t[0] === S.p), sum = r.units * per[2];
+        let h = '';
+        r.Q.forEach(q => {
+          h += q.tail
+            ? '<div class="hx-q">❓ <b>' + esc(q.names.join(' ')) + '</b> — האם זה המשך של שם האם (שם כפול: <b>' + esc(q.prev) + '</b>), או אדם נוסף?<div class="shx-row"><button type="button" class="shx-btn sm" data-qa="' + esc(q.key) + '" data-qv="cont">כן, שם כפול</button><button type="button" class="shx-btn sm" data-qa="' + esc(q.key) + '" data-qv="sep">אדם נוסף</button></div></div>'
+            : '<div class="hx-q">❓ <b>' + esc(q.names.join(' ') + (q.mo ? ' ' + q.mo : '')) + '</b> — האם מדובר באדם אחד בעל ' + q.names.length + ' שמות?<div class="shx-row"><button type="button" class="shx-btn sm" data-qa="' + esc(q.key) + '" data-qv="one">כן, אדם אחד</button><button type="button" class="shx-btn sm" data-qa="' + esc(q.key) + '" data-qv="many">לא, ' + q.names.length + ' אנשים</button></div></div>';
+        });
+        if(r.bad.length) h += '<div class="hx-q bad">✋ כתבו רק שמות בעברית — בלי מספרים, קישורים או אותיות לועזיות.</div>';
+        if(r.dup) h += '<div class="shx-sub">שם שהופיע פעמיים נספר פעם אחת.</div>';
+        const an = ov.querySelector('#hxAn'); an.innerHTML = h;
+        an.querySelectorAll('[data-qa]').forEach(b => b.onclick = ()=>{ S.ans[b.dataset.qa] = b.dataset.qv; R(); });
         const el = ov.querySelector('#hxSum');
-        el.style.display = n.length ? 'block' : 'none';
-        el.innerHTML = '<b>' + n.length + (n.length === 1 ? ' שם' : ' שמות') + ' × ' + per[2] + ' ₪ = ' + sum.toLocaleString('he-IL') + ' ₪</b><small>' + esc(n.join(' · ')) + '</small>';
-        S.n = n; S.sum = sum;
+        el.style.display = r.units ? 'block' : 'none';
+        el.innerHTML = '<b>' + r.units + (r.units === 1 ? ' שם' : ' שמות') + ' × ' + per[2] + ' ₪ = ' + sum.toLocaleString('he-IL') + ' ₪</b><small>' + esc(r.P.map(p => p.n).join(' · ')) + '</small>';
+        S.r = r; S.n = r.P.map(p => p.n); S.sum = sum;
       };
       ov.querySelector('#hxN').addEventListener('input', R);
       [['#hxTy','t'],['#hxPer','p']].forEach(([id, k]) => ov.querySelectorAll(id + ' button').forEach(b => b.onclick = ()=>{
@@ -15620,31 +15716,111 @@ tznBody._tznRerender = tznRender;
       }));
       ov.querySelector('#hxGo').onclick = ()=>{
         R();
-        if(!S.n || !S.n.length){ toast('כתבו את השמות להקדשה'); return; }
-        if(/[a-zA-Z0-9@\/]/.test(S.n.join(' '))){ toast('כתבו רק שמות בעברית'); return; }
-        if(S.n.length > 30){ toast('לבקשה גדולה — פנו אלינו בוואטסאפ'); return; }
-        const q = { t:S.t, p:S.p, n:S.n, sum:S.sum, by: ov.querySelector('#hxBy').value.trim().slice(0, 60) };
+        const r = S.r;
+        if(!r || !r.units){ toast('כתבו את השמות להקדשה'); return; }
+        if(r.bad.length){ toast('כתבו רק שמות בעברית'); return; }
+        if(r.Q.length){ toast('ענו על השאלה לגבי השמות 👆'); const q0 = ov.querySelector('.hx-q'); if(q0) q0.scrollIntoView({block:'center', behavior:'smooth'}); return; }
+        if(r.units > 30){ toast('לבקשה גדולה — פנו אלינו בוואטסאפ'); return; }
+        const q = { t:S.t, p:S.p, n:S.n, u:r.units, sum:S.sum, by: ov.querySelector('#hxBy').value.trim().slice(0, 60) };
         ov.close(); setTimeout(()=> hkPay(q), 200);
       };
     }
     function hkPay(q){
-      const P = hkLive.hkPay || {};
+      const L0 = hkLive.hkPay || {}, P = { pb: L0.pb || HK_PAY0.pb, bit: L0.bit || HK_PAY0.bit }, bitUrl = /^https:\/\//.test(P.bit);
       const per = HK_PER.find(t => t[0] === q.p) || HK_PER[0];
       const ov = sheet(
         '<div class="shx-hd">💳</div><h3>תשלום ההקדשה</h3>' +
         '<div class="shx-sum"><b>' + q.sum.toLocaleString('he-IL') + ' ₪</b><small>' + esc(hkReqTxt(q)) + '</small></div>' +
-        ((P.bit || P.pb) ? '<div class="shx-row">' + (P.bit ? '<button type="button" class="shx-btn" id="hxBit">💙 תשלום בביט</button>' : '') + (P.pb ? '<button type="button" class="shx-btn" id="hxPb">💚 תשלום בפייבוקס</button>' : '') + '</div>' : '') +
+        ((P.pb || bitUrl) ? '<div class="shx-row">' + (P.pb ? '<button type="button" class="shx-btn" id="hxPb">💚 תשלום בפייבוקס</button>' : '') + (bitUrl ? '<button type="button" class="shx-btn" id="hxBit">💙 תשלום בביט</button>' : '') + '</div>' : '') +
+        ((P.bit && !bitUrl) ? '<div class="hx-bit">💙 אפשר לשלם גם <b>בביט</b> למספר <b dir="ltr">' + esc(P.bit) + '</b> <button type="button" class="shx-btn sm" id="hxBitCp">📋 העתקה</button></div>' : '') +
         '<div class="shx-sub" style="margin:10px 0">' + ((P.bit || P.pb) ? 'אחרי התשלום לחצו על הכפתור למטה ושלחו בוואטסאפ את אישור התשלום.' : 'לתשלום — שלחו את ההקדשה בוואטסאפ, ונחזור אליכם עם פרטי התשלום.') +
         ' ההקדשה תעלה לפס מיד כשהתשלום מאושר, והזמן (' + per[4] + ') נספר מרגע העלייה.</div>' +
         '<button type="button" class="shx-btn" id="hxSend">📨 שליחת ההקדשה בוואטסאפ</button>' + HK_BLESS(q.t));
-      if(P.bit) ov.querySelector('#hxBit').onclick = ()=> openUrl(P.bit);
+      if(bitUrl) ov.querySelector('#hxBit').onclick = ()=> openUrl(P.bit);
       if(P.pb) ov.querySelector('#hxPb').onclick = ()=> openUrl(P.pb);
+      const cp = ov.querySelector('#hxBitCp');
+      if(cp) cp.onclick = ()=>{ try{ navigator.clipboard.writeText(P.bit.replace(/\D/g, '')).then(()=> toast('הועתק ✓')); }catch(e){} };
       ov.querySelector('#hxSend').onclick = ()=>{
         openUrl('https://wa.me/' + WA_PHONE + '?text=' + encodeURIComponent('שלום, הקדשה בספר המידות:\n' + hkReqTxt(q) + ((P.bit || P.pb) ? '\n\n✅ שילמתי — מצרף אישור תשלום' : '\n\nאשמח לפרטי תשלום')));
         ov.close();
         setTimeout(()=> sheet('<div class="shx-hd">🙏</div><h3>תודה רבה!</h3><div class="shx-intro" style="text-align:center">ההקדשה נשלחה. מיד כשהתשלום יאושר, השמות יעלו לפס בתחתית המסך אצל כל הלומדים.</div>' + HK_BLESS(q.t)), 300);
       };
     }
+
+    // ✏️ ניהול מהיר של ההקדשות: לחיצה ארוכה (3 שניות) על הפס → קוד → עריכה מלאה (אותו מאגר כמו בברסלב PRO)
+    const HK_API = 'https://api.github.com/repos/emona501-prog/breslever-pro/contents/live/edits.json';
+    async function hkMod(fn, msg){
+      let token = ''; try{ token = localStorage.getItem('sh_gh_token') || ''; }catch(e){}
+      if(!token){ token = (window.prompt('הדבק כאן את מפתח הגישה של גיטהאב (נשמר רק במכשיר הזה):') || '').trim(); if(!token) throw new Error('בלי מפתח גישה'); try{ localStorage.setItem('sh_gh_token', token); }catch(e){} }
+      const headers = { 'Authorization':'Bearer ' + token, 'Accept':'application/vnd.github+json' };
+      const g = await fetch(HK_API + '?ref=main', { headers, cache:'no-store' });
+      if(g.status === 401 || g.status === 403){ try{ localStorage.removeItem('sh_gh_token'); }catch(e){} throw new Error('מפתח הגישה לא תקין'); }
+      if(!g.ok) throw new Error('שגיאה ' + g.status);
+      const meta = await g.json(), cur = JSON.parse(b64DecodeUtf8(meta.content)), now = Date.now();
+      cur.hk = (cur.hk || []).filter(h => h && h.u > now);
+      fn(cur);
+      const put = await fetch(HK_API, { method:'PUT', headers, body: JSON.stringify({ message: msg, content: b64EncodeUtf8(JSON.stringify(cur)), sha: meta.sha, branch:'main' }) });
+      if(!put.ok) throw new Error('הפרסום נכשל (' + put.status + ')');
+      hkLive = { hk: cur.hk, hkPay: cur.hkPay || {} }; lsSet(LS_HK, hkLive); hkRunning = false; hkTick();
+    }
+    function hkEdit(h, onSave){
+      const ty = HK_TY.concat([HK_FREE]);
+      const left = h && h.u ? Math.max(0, Math.round((h.u - Date.now()) / 864e5 * 10) / 10) : 0;
+      const ov = sheet('<h3>' + (h && h.id ? '✏️ עריכת הקדשה' : '🕯️ הקדשה חדשה') + '</h3>' +
+        '<div class="shx-lbl">מטרה</div><select id="heT" class="hx-in">' + ty.map(t => '<option value="' + t[0] + '"' + (h && h.t === t[0] ? ' selected' : '') + '>' + t[2] + ' ' + t[3] + '</option>').join('') + '</select>' +
+        '<div class="shx-lbl">שמות — כל שורה מוצגת בדיוק כמו שנכתבה</div><textarea id="heN" rows="6">' + esc(((h && h.n) || []).join('\n')) + '</textarea>' +
+        '<div class="shx-lbl">משך</div><select id="heP" class="hx-in">' + (h && h.id ? '<option value="keep">להשאיר (נשארו ' + left + ' ימים)</option>' : '') +
+        HK_PER.map(t => '<option value="' + t[0] + '">' + t[1] + ' מעכשיו (' + t[4] + ')</option>').join('') + '<option value="x">מספר ימים אחר…</option><option value="inf">ללא הגבלת זמן (עד שמורידים)</option></select>' +
+        '<input id="heD" class="hx-in" type="number" min="1" max="3650" placeholder="כמה ימים" style="display:none">' +
+        '<div class="shx-sub" id="hePrev" style="margin:8px 0"></div><button type="button" class="shx-btn" id="heS">📤 שמירה ופרסום לכולם</button>');
+      const P = ov.querySelector('#heP'), D = ov.querySelector('#heD');
+      const names = ()=> ov.querySelector('#heN').value.split('\n').map(t => t.trim()).filter(Boolean);
+      const prev = ()=>{ const n = names(); ov.querySelector('#hePrev').textContent = n.length ? 'בפס: ' + hkLine({ t: ov.querySelector('#heT').value, n }) : ''; };
+      P.onchange = ()=> D.style.display = P.value === 'x' ? '' : 'none';
+      ov.querySelector('#heN').oninput = prev; ov.querySelector('#heT').onchange = prev; prev();
+      ov.querySelector('#heS').onclick = ()=>{
+        const n = names(); if(!n.length){ toast('כתבו לפחות שם אחד'); return; }
+        const now = Date.now(), v = P.value; let u = h && h.u;
+        if(v === 'inf') u = now + 3650 * 864e5;
+        else if(v === 'x'){ const d = +D.value; if(!(d > 0)){ toast('כתבו מספר ימים'); return; } u = now + d * 864e5; }
+        else if(v !== 'keep') u = now + (HK_PER.find(x => x[0] === v) || HK_PER[0])[3] * 864e5;
+        ov.close();
+        onSave({ id: (h && h.id) || now.toString(36) + Math.random().toString(36).slice(2, 5), t: ov.querySelector('#heT').value, n, s: (h && h.id && h.s) || now, u });
+      };
+    }
+    function hkAdmin(){
+      const ov = sheet('<h3>🕯️ ניהול הקדשות</h3><div class="shx-sub">אותן הקדשות מופיעות גם בברסלב PRO וגם בספר המידות. כל שינוי כאן עולה מיד לכולם.</div><div id="haL"></div><button type="button" class="shx-btn" id="haAdd" style="margin-top:10px">➕ הוספת הקדשה (בלי הגבלה)</button>');
+      const run = async (fn, msg, ok)=>{ toast('מפרסם…'); try{ await hkMod(fn, msg); toast(ok); draw(); }catch(e){ toast('❌ ' + (e.message || e)); } };
+      const draw = ()=>{
+        const A = hkActive(), L = ov.querySelector('#haL');
+        L.innerHTML = A.length ? A.map(h => '<div class="ha-it"><span>' + esc(hkLine(h)) + '<small> · עד ' + new Date(h.u).toLocaleString('he-IL', { day:'numeric', month:'numeric', hour:'2-digit', minute:'2-digit' }) + '</small></span><button type="button" data-e="' + esc(h.id) + '">✏️</button><button type="button" data-x="' + esc(h.id) + '">✕</button></div>').join('') : '<div class="shx-sub" style="margin:10px 0">אין עכשיו הקדשות פעילות.</div>';
+        L.querySelectorAll('[data-x]').forEach(b => b.onclick = ()=>{ if(confirm('להוריד את ההקדשה מהפס?')) run(i => i.hk = i.hk.filter(h => h.id !== b.dataset.x), '🕯️ הסרת הקדשה', 'ההקדשה הוסרה'); });
+        L.querySelectorAll('[data-e]').forEach(b => b.onclick = ()=>{ const h = hkActive().find(h => h.id === b.dataset.e); h && hkEdit(h, e => run(i => i.hk = i.hk.filter(x => x.id !== e.id).concat([e]), '🕯️ עריכת הקדשה', '✅ ההקדשה עודכנה אצל כולם')); });
+      };
+      ov.querySelector('#haAdd').onclick = ()=> hkEdit({ t:'rf', n:[] }, e => run(i => i.hk.push(e), '🕯️ הקדשה חדשה', '✅ ההקדשה עלתה לכולם'));
+      draw();
+    }
+    function hkQuick(){
+      if(sessionStorage.getItem('sh_hk_adm') === '1') return hkAdmin();
+      const ov = sheet('<h3>🔐 ניהול הקדשות</h3><input id="hkPin" class="hx-in" type="password" inputmode="numeric" placeholder="קוד" style="font-size:22px;text-align:center;letter-spacing:6px"><button type="button" class="shx-btn" id="hkPinGo" style="margin-top:8px">כניסה</button>');
+      const I = ov.querySelector('#hkPin');
+      const go = ()=>{
+        const saved = localStorage.getItem(LS_ADMIN_PIN);
+        if(I.value !== '1986' && !(saved && I.value === saved)){ toast('קוד שגוי'); return; }
+        try{ sessionStorage.setItem('sh_hk_adm', '1'); }catch(e){}
+        ov.close(); setTimeout(hkAdmin, 200);
+      };
+      setTimeout(()=> I.focus(), 250); ov.querySelector('#hkPinGo').onclick = go; I.onkeydown = e => { if(e.key === 'Enter') go(); };
+    }
+    (function(){
+      const el = document.getElementById('shHkBar'); let T = 0, x = 0, y = 0, fired = false;
+      const stop = ()=>{ clearTimeout(T); T = 0; };
+      el.addEventListener('pointerdown', e => { x = e.clientX; y = e.clientY; stop(); fired = false; T = setTimeout(()=>{ T = 0; fired = true; try{ navigator.vibrate && navigator.vibrate(40); }catch(e){} hkQuick(); }, 3000); });
+      el.addEventListener('pointermove', e => { if(T && Math.hypot(e.clientX - x, e.clientY - y) > 10) stop(); });
+      ['pointerup','pointercancel','pointerleave'].forEach(t => el.addEventListener(t, stop));
+      el.addEventListener('click', e => { if(fired){ fired = false; e.preventDefault(); e.stopImmediatePropagation(); } }, true);
+      el.addEventListener('contextmenu', e => e.preventDefault());
+    })();
     window.shDedicate = hkForm;
     const db = document.getElementById('btnDedicate'); if(db) db.addEventListener('click', hkForm);
     window.__shTickers = { quoteTick, hkTick, hkFetch, hkForm, shareApp, parseNames, get live(){ return hkLive; }, set live(v){ hkLive = v; } };
