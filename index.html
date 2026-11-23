@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ספר המידות</title>
-<meta name="app-build" content="86d78601a2">
+<meta name="app-build" content="be5e351f4b">
 <script>
 /* עדכון אוטומטי: בכל פתיחה בודקים אם עלתה גרסה חדשה לאתר (בלי מטמון), ואם כן – טוענים אותה מיד */
 (function(){try{
   if(!/^https?:$/.test(location.protocol)) return;
-  var cur='86d78601a2';
+  var cur='be5e351f4b';
   setTimeout(function(){
     fetch(location.pathname+'?_chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="app-build" content="([0-9a-f]{6,})"/); if(!m||m[1]===cur) return;
@@ -372,6 +372,11 @@
   #shHkBar .hk-l{ margin-inline-end:10px; opacity:.9; }
   body.hk-show #shHkBar{ display:flex; }
   body.hk-show #app{ padding-bottom:34px; }
+  body.hk-show #copySelectBar, body.hk-show #deleteSelectBar, body.hk-show #printSelectBar{ bottom:calc(28px + env(safe-area-inset-bottom,0px)); }
+  /* במצב בחירה (העתקה/הדפסה/מחיקה) הכפתורים הצפים מסתירים את סרגל הפעולות – מסתירים אותם עד היציאה */
+  body:has(#copySelectBar[style*="flex"]) #shFab, body:has(#copySelectBar[style*="flex"]) #midotBotFab,
+  body:has(#printSelectBar[style*="flex"]) #shFab, body:has(#printSelectBar[style*="flex"]) #midotBotFab,
+  body:has(#deleteSelectBar[style*="flex"]) #shFab, body:has(#deleteSelectBar[style*="flex"]) #midotBotFab{ display:none !important; }
   body.hk-show #shFab{ bottom:calc(52px + env(safe-area-inset-bottom,0px)); }
   body.hk-show #midotBotFab:not([style*="top"]){ bottom:calc(52px + env(safe-area-inset-bottom,0px)); }
   body.hk-show #midotBotPanel{ bottom:calc(116px + env(safe-area-inset-bottom,0px)); }
@@ -6161,6 +6166,7 @@
     document.getElementById('printSelectCount').textContent = `${checked} נבחרו`;
   }
   document.getElementById('btnPrintTopic').addEventListener('click', ()=>{
+    if(printSelectMode){ document.getElementById('printSelectCancel').click(); return; } // לחיצה שנייה – יציאה ממצב הבחירה
     if(deleteSelectMode) document.getElementById('deleteSelectCancel').click();
     if(copySelectMode) document.getElementById('copySelectCancel').click();
     printSelectMode = true;
@@ -6220,6 +6226,7 @@
   }
   document.getElementById('btnDeleteSelectTopic').addEventListener('click', ()=>{
     if(!adminMode) return;
+    if(deleteSelectMode){ document.getElementById('deleteSelectCancel').click(); return; }
     if(printSelectMode) document.getElementById('printSelectCancel').click();
     if(copySelectMode) document.getElementById('copySelectCancel').click();
     deleteSelectMode = true;
@@ -6271,6 +6278,7 @@
     document.getElementById('copySelectCount').textContent = `${checked} נבחרו`;
   }
   document.getElementById('btnCopySelectTopic').addEventListener('click', ()=>{
+    if(copySelectMode){ document.getElementById('copySelectCancel').click(); return; } // לחיצה שנייה – יציאה ממצב הבחירה
     if(printSelectMode) document.getElementById('printSelectCancel').click();
     if(deleteSelectMode) document.getElementById('deleteSelectCancel').click();
     copySelectMode = true;
