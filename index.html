@@ -1314,6 +1314,10 @@
   .reminder-bell{
     position:absolute; left:14px; top:10px; background:none; border:none; font-size:20px; cursor:pointer;
   }
+  .landing-music-btn{
+    position:absolute; left:50px; top:10px; background:none; border:none; font-size:20px; cursor:pointer; padding:0;
+  }
+  .music-mute-btn.is-muted{ opacity:.75; }
   .private-room-btn{
     position:absolute; right:14px; top:10px; background:none; border:none; font-size:20px; cursor:pointer;
   }
@@ -1851,6 +1855,7 @@
     <div class="sh-tick" id="shQuoteTick" hidden role="button" aria-label="דיבורים מספר המידות"><span class="tk-ic">✨</span><div class="tk-win"><div class="tk-run"></div></div></div>
     <div class="hebrew-date-bar" id="hebrewDateBar">
       <button class="reminder-bell" id="reminderBellBtn" title="תזכורות והגדרות">🔔</button>
+      <button class="music-mute-btn landing-music-btn" id="landingMusicBtn" title="השתקת הניגון" aria-label="השתקת הניגון">🔇</button>
       <button class="private-room-btn" id="privateRoomBtn" title="חדר פרטי">🚪<span class="prb-count" id="prbCount" style="display:none;">0</span></button>
       <div class="hdb-bsd">בסיעתא דשמיא</div>
       <div class="hdb-date" id="hebrewDateText"></div>
@@ -2366,7 +2371,8 @@
           <button class="icon-btn" id="btnPrintTopic">🖨️</button>
           <button class="icon-btn" id="btnBookletTopic" title="הדפס את הערך כולו כחוברת">📖</button>
           <button class="icon-btn" id="btnDeleteSelectTopic" style="display:none;">🗑️</button>
-          <button class="icon-btn" id="btnDrivingMode">🔊</button>
+          <button class="icon-btn" id="btnDrivingMode" title="הקראה בקול" aria-label="הקראה בקול">🗣️</button>
+          <button class="icon-btn music-mute-btn" id="readerMusicBtn" title="השתקת הניגון" aria-label="השתקת הניגון">🔇</button>
           <button class="icon-btn auto-scroll-btn" id="readerAutoScrollBtn" title="גלילה אוטומטית">🔽</button>
           <button class="icon-btn" id="btnBookmarkHere">🔖</button>
         </div>
@@ -3876,6 +3882,13 @@
   function updateBgBtn(){
     bgBtn.textContent = bgMuted ? '🔇' : '🎵';
     bgBtn.classList.toggle('muted', bgMuted);
+    // כפתורי הניגון במסכים: כשהניגון מתנגן מראים רמקול מושתק (= לחיצה משתיקה); כשהוא מושתק – תו מוזיקה (= לחיצה מחזירה את הניגון)
+    document.querySelectorAll('.music-mute-btn').forEach(b=>{
+      b.textContent = bgMuted ? '🎵' : '🔇';
+      b.classList.toggle('is-muted', bgMuted);
+      const t = bgMuted ? 'הפעלת הניגון' : 'השתקת הניגון';
+      b.title = t; b.setAttribute('aria-label', t);
+    });
   }
   updateBgBtn();
   function tryStartBgMusic(){
@@ -3888,6 +3901,11 @@
   }
   document.addEventListener('click', tryStartBgMusic, {once:true});
   document.addEventListener('touchstart', tryStartBgMusic, {once:true});
+  document.querySelectorAll('.music-mute-btn').forEach(b=> b.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    bgBtn.click();
+    try{ toast(bgMuted ? '🔇 הניגון הושתק' : '🎵 הניגון חזר'); }catch(err){}
+  }));
   bgBtn.addEventListener('click', ()=>{
     bgMuted = !bgMuted;
     localStorage.setItem(LS_BG_MUTED, bgMuted ? '1' : '0');
