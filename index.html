@@ -1789,6 +1789,55 @@
   #settingsOverlay .settings-group, #settingsOverlay .settings-group:first-of-type{ margin:10px 12px; padding:12px 14px; background:var(--paper-2); border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow); }
   #settingsOverlay .settings-group-title{ font-family:var(--font-display); font-size:17px; margin-bottom:8px; }
   #settingsOverlay .edit-actions{ padding:0 12px; }
+
+  /* ===== מסך הלימוד בסגנון הטקסט של ברסלב PRO ===== */
+  #reader{ background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 800%22 preserveAspectRatio=%22xMidYMid slice%22%3E%3Cdefs%3E%3ClinearGradient id=%22s%22 x1=%220%22 y1=%220%22 x2=%220%22 y2=%221%22%3E%3Cstop offset=%220%22 stop-color=%22%239fc0d0%22 stop-opacity=%22.30%22/%3E%3Cstop offset=%22.5%22 stop-color=%22%23ffffff%22 stop-opacity=%22.10%22/%3E%3Cstop offset=%221%22 stop-color=%22%23a9c79b%22 stop-opacity=%22.22%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%22400%22 height=%22800%22 fill=%22url%28%23s%29%22/%3E%3Ccircle cx=%2288%22 cy=%22190%22 r=%2242%22 fill=%22%23f6dc8a%22 fill-opacity=%22.42%22/%3E%3Cpath d=%22M0 470 L60 400 L110 450 L170 380 L230 455 L300 395 L360 440 L400 410 L400 800 L0 800Z%22 fill=%22%238fa9bb%22 fill-opacity=%22.20%22/%3E%3Cpath d=%22M0 560 L70 500 L140 550 L210 480 L290 545 L350 505 L400 540 L400 800 L0 800Z%22 fill=%22%238fb39a%22 fill-opacity=%22.22%22/%3E%3Cpath d=%22M0 640 L80 590 L160 630 L240 585 L320 635 L400 600 L400 800 L0 800Z%22 fill=%22%237fae7a%22 fill-opacity=%22.24%22/%3E%3Cpath d=%22M0 720 L100 680 L200 715 L300 675 L400 705 L400 800 L0 800Z%22 fill=%22%236fa26a%22 fill-opacity=%22.28%22/%3E%3C/svg%3E"); background-size:cover; background-position:center bottom; background-repeat:no-repeat; }
+  body[data-theme="night"] #reader, body.has-custom-bg #reader{ background-image:none; }
+  #reader .reader-scroll{ padding:6px 18px 120px; }
+  #readerItems .siman-block{ display:block; padding:0 0 4px; margin:0 0 6px; border-bottom:0; }
+  #readerItems .siman-block::after{ content:""; display:block; clear:both; }
+  #readerItems .siman-block.highlighted, #readerItems .siman-block.speaking{ border-radius:12px; padding-inline:8px; }
+  #readerItems .siman-num{
+    display:flex; align-items:center; justify-content:center; gap:10px; margin:22px 0 6px; padding:0; min-width:0;
+    font-family:'Frank Ruhl Libre','David Libre','Noto Serif Hebrew',serif; font-weight:700; font-size:1.05em; color:#2c3d63;
+  }
+  body[data-theme="night"] #readerItems .siman-num{ color:#c9a24c; }
+  #readerItems .siman-num::before, #readerItems .siman-num::after{ content:""; height:1px; flex:0 1 70px; background:linear-gradient(to left,transparent,#c9a24c,transparent); }
+  #readerItems .siman-text{
+    font-family:'Frank Ruhl Libre','David Libre','Noto Serif Hebrew',serif; line-height:1.85; text-align:justify; word-spacing:.02em;
+  }
+  #readerItems .siman-block > .siman-check{ position:absolute; right:34px; top:2px; margin:0; width:20px; height:20px; }
+  #readerItems .siman-block > .drag-handle{ position:absolute; right:0; top:-2px; margin:0; }
+  #readerItems .siman-block .options-hint{
+    position:absolute; left:-4px; top:-3px; width:30px; height:30px; margin:0; padding:0; opacity:1; font-size:0; justify-content:center; overflow:visible; pointer-events:auto;
+  }
+  #readerItems .siman-block .options-hint .dots{
+    display:flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; font-size:0; letter-spacing:0;
+    border:1px solid var(--line); background:var(--paper);
+  }
+  #readerItems .siman-block .options-hint .dots::before{ content:"⋮"; font-size:15px; font-weight:700; color:var(--ink-soft); line-height:1; }
+  #readerItems .biur-wrap{ margin-top:4px; }
+  #readerItems .biur-tab{ font-size:13px; padding:5px 13px; background:var(--paper); }
+  #readerItems .biur-tab.active{ background:var(--maroon); }
+  #readerItems .biur-content{
+    font-family:'Frank Ruhl Libre','David Libre','Noto Serif Hebrew',serif; font-size:.78em; line-height:1.75; margin-top:8px; clear:both;
+    background:color-mix(in srgb, var(--paper) 93%, transparent); border:1px solid var(--line); border-inline-start:3px solid #c9a24c;
+    border-radius:12px; padding:11px 14px; box-shadow:0 4px 14px rgba(40,30,10,.07);
+  }
+  .rd-ck{
+    float:left; display:inline-flex; align-items:center; gap:6px; margin:4px 0 6px; cursor:pointer;
+    font:600 13px var(--font-ui); color:var(--ink-soft); border:1px solid var(--line); border-radius:10px; padding:4px 10px; background:var(--paper);
+    -webkit-user-select:none; user-select:none;
+  }
+  .rd-ck input, .ch-ck input{ width:18px; height:18px; accent-color:#2f7d4f; margin:0; }
+  .rd-ck:has(input:checked), .ch-ck:has(input:checked){ color:#2f7d4f; border-color:#2f7d4f; }
+  .ch-tools{ display:flex; align-items:center; justify-content:center; margin:4px 0 0; }
+  .ch-ck{
+    display:inline-flex; align-items:center; gap:7px; cursor:pointer; font:600 13.5px var(--font-ui); color:var(--ink-soft);
+    border:1px solid var(--line); border-radius:999px; padding:6px 16px; background:var(--paper); -webkit-user-select:none; user-select:none;
+  }
+  body.app-clean .rd-ck, body.app-clean .ch-tools{ display:none; }
+  @media print{ .rd-ck, .ch-tools{ display:none !important; } #reader{ background-image:none !important; } }
 </style>
 </head>
 <body>
@@ -4106,7 +4155,7 @@
 
   let doneMap = loadJSON(LS_DONE, {});
   let notesMap = loadJSON(LS_NOTES, {});
-  let fontSize = loadJSON(LS_FONT, 18);
+  let fontSize = loadJSON(LS_FONT, 22);
 
   const topicById = {};
   DATA.forEach(t => topicById[t.id] = t);
@@ -4814,6 +4863,21 @@
     const deleteBtn = document.getElementById('btnDeleteSelectTopic');
     if(deleteBtn) deleteBtn.style.display = adminMode ? '' : 'none';
     readerItemsEl.innerHTML = '';
+    if(topic.items.length){
+      const chTools = document.createElement('div');
+      chTools.className = 'ch-tools';
+      chTools.innerHTML = `<label class="ch-ck"><input type="checkbox" ${topic.items.every(x=> doneMap[x.id]) ? 'checked' : ''}> קראתי את כל המידה</label>`;
+      chTools.querySelector('input').addEventListener('change', (e)=>{
+        const on = e.target.checked;
+        topic.items.forEach(x=>{ if(on) doneMap[x.id] = true; else delete doneMap[x.id]; });
+        saveJSON(LS_DONE, doneMap);
+        readerItemsEl.querySelectorAll('.rd-ck input').forEach(c=>{ c.checked = !!doneMap[c.dataset.rd]; });
+        readerItemsEl.querySelectorAll('.mark-done').forEach(b=>{ const d = !!doneMap[b.dataset.id]; b.classList.toggle('done', d); b.textContent = d ? '✔ נקרא' : 'סמן כנקרא'; });
+        renderTopicList();
+        toast(on ? '✓ כל המידה סומנה כנקראה' : 'הסימון הוסר');
+      });
+      readerItemsEl.appendChild(chTools);
+    }
     let prevPart = null;
     topic.items.forEach(it => {
       if(it.part && prevPart !== null && it.part !== prevPart){
@@ -4851,6 +4915,7 @@
         <div style="flex:1">
           <div class="siman-text">${escapeHtml(it.text)}</div>
           ${translationHtml(it.id)}
+          <label class="rd-ck"><input type="checkbox" data-rd="${it.id}" ${doneMap[it.id]?'checked':''}> קראתי</label>
           ${biurHtml}
           ${amiraBtn}
           <div class="note ${noteText?'show':''}" data-id="${it.id}">${amiraTextHtml(noteText)}</div>
@@ -4867,6 +4932,15 @@
           </div>
         </div>`;
       readerItemsEl.appendChild(block);
+      const rdCk = block.querySelector('.rd-ck input');
+      if(rdCk) rdCk.addEventListener('change', ()=>{
+        if(rdCk.checked) doneMap[it.id] = true; else delete doneMap[it.id];
+        saveJSON(LS_DONE, doneMap);
+        const mb = block.querySelector('.mark-done');
+        if(mb){ mb.classList.toggle('done', rdCk.checked); mb.textContent = rdCk.checked ? '✔ נקרא' : 'סמן כנקרא'; }
+        const all = readerItemsEl.querySelector('.ch-ck input'); if(all) all.checked = topic.items.every(x=> doneMap[x.id]);
+        renderTopicList();
+      });
       if(it.peshat){
         const biurTabs = block.querySelectorAll('.biur-tab');
         const biurContentEl = block.querySelector('.biur-content');
@@ -4901,7 +4975,7 @@
         let moved = false;
         let startTime = 0;
         const startP = (e)=>{
-          if(e && e.target && e.target.closest('.drag-handle, .siman-check, .translate-btn, .translation-panel')) return;
+          if(e && e.target && e.target.closest('.drag-handle, .siman-check, .translate-btn, .translation-panel, .rd-ck')) return;
           firedLong = false;
           moved = false;
           startTime = Date.now();
@@ -4924,7 +4998,7 @@
           clearTimeout(pressTimer);
           if(!firedLong && !moved && Date.now() - startTime < 500){
             const target = e && e.target;
-            if(target && !target.closest('button, a, .note, .amira-link, .siman-actions, .drag-handle, .siman-check, .translate-btn, .translation-panel')){
+            if(target && !target.closest('button, a, .note, .amira-link, .siman-actions, .drag-handle, .siman-check, .translate-btn, .translation-panel, .rd-ck')){
               toggleItemActions(it.id);
             }
           }
@@ -6391,6 +6465,7 @@
       saveJSON(LS_DONE, doneMap);
       btn.classList.toggle('done');
       btn.textContent = doneMap[id] ? '✔ נקרא' : 'סמן כנקרא';
+      { const ck = readerItemsEl.querySelector('.rd-ck input[data-rd="' + id + '"]'); if(ck) ck.checked = !!doneMap[id]; }
       renderTopicList();
     } else if(btn.classList.contains('add-note')){
       openNoteEditor(id);
@@ -7064,6 +7139,8 @@
     // lightened warm accent for night while keeping the original color elsewhere.
     r.setProperty('--maroon-dark', th.titleAccent);
     document.body.style.backgroundImage = settings.customBg ? `url(${settings.customBg})` : '';
+    document.body.dataset.theme = settings.theme || 'parchment';
+    document.body.classList.toggle('has-custom-bg', !!settings.customBg);
     document.body.style.backgroundSize = 'cover';
     document.body.style.backgroundAttachment = 'fixed';
     if(bgAudio) bgAudio.volume = settings.musicVolume;
