@@ -1419,6 +1419,11 @@
     font-size:15px; cursor:pointer; color:var(--maroon-dark); flex-shrink:0;
   }
   .toolbar-actions{ display:flex; gap:6px; }
+  /* 9 כפתורים בשורה: מתכווצים כדי להיכנס ברוחב המסך, בלי שהמסך יזוז הצידה */
+  .reader-toolbar{ max-width:100%; overflow:hidden; }
+  .reader-toolbar .row1{ gap:6px; padding-inline:10px; }
+  .reader-toolbar .toolbar-actions{ flex:1; min-width:0; justify-content:flex-end; gap:4px; }
+  .reader-toolbar .toolbar-actions button.icon-btn{ flex:0 1 36px; min-width:0; padding:0; }
   .font-controls{ display:flex; align-items:center; gap:6px; background:var(--paper-2); border-radius:999px; padding:4px 6px; border:1px solid var(--line);}
   .font-controls button{ background:none; border:none; width:30px; height:30px; border-radius:50%; font-size:14px; cursor:pointer; color:var(--maroon-dark); font-family:var(--font-ui); font-weight:700;}
 
@@ -1855,7 +1860,7 @@
     <div class="sh-tick" id="shQuoteTick" hidden role="button" aria-label="דיבורים מספר המידות"><span class="tk-ic">✨</span><div class="tk-win"><div class="tk-run"></div></div></div>
     <div class="hebrew-date-bar" id="hebrewDateBar">
       <button class="reminder-bell" id="reminderBellBtn" title="תזכורות והגדרות">🔔</button>
-      <button class="music-mute-btn landing-music-btn" id="landingMusicBtn" title="השתקת הניגון" aria-label="השתקת הניגון">🔇</button>
+      <button class="music-mute-btn landing-music-btn" id="landingMusicBtn" title="השתקת הניגון" aria-label="השתקת הניגון">🎵</button>
       <button class="private-room-btn" id="privateRoomBtn" title="חדר פרטי">🚪<span class="prb-count" id="prbCount" style="display:none;">0</span></button>
       <div class="hdb-bsd">בסיעתא דשמיא</div>
       <div class="hdb-date" id="hebrewDateText"></div>
@@ -2372,7 +2377,7 @@
           <button class="icon-btn" id="btnBookletTopic" title="הדפס את הערך כולו כחוברת">📖</button>
           <button class="icon-btn" id="btnDeleteSelectTopic" style="display:none;">🗑️</button>
           <button class="icon-btn" id="btnDrivingMode" title="הקראה בקול" aria-label="הקראה בקול">🗣️</button>
-          <button class="icon-btn music-mute-btn" id="readerMusicBtn" title="השתקת הניגון" aria-label="השתקת הניגון">🔇</button>
+          <button class="icon-btn music-mute-btn" id="readerMusicBtn" title="השתקת הניגון" aria-label="השתקת הניגון">🎵</button>
           <button class="icon-btn auto-scroll-btn" id="readerAutoScrollBtn" title="גלילה אוטומטית">🔽</button>
           <button class="icon-btn" id="btnBookmarkHere">🔖</button>
         </div>
@@ -3882,9 +3887,9 @@
   function updateBgBtn(){
     bgBtn.textContent = bgMuted ? '🔇' : '🎵';
     bgBtn.classList.toggle('muted', bgMuted);
-    // כפתורי הניגון במסכים: כשהניגון מתנגן מראים רמקול מושתק (= לחיצה משתיקה); כשהוא מושתק – תו מוזיקה (= לחיצה מחזירה את הניגון)
+    // כפתורי הניגון במסכים מראים את המצב: 🎵 = הניגון מתנגן, 🔇 = מושתק. לחיצה מחליפה
     document.querySelectorAll('.music-mute-btn').forEach(b=>{
-      b.textContent = bgMuted ? '🎵' : '🔇';
+      b.textContent = bgMuted ? '🔇' : '🎵';
       b.classList.toggle('is-muted', bgMuted);
       const t = bgMuted ? 'הפעלת הניגון' : 'השתקת הניגון';
       b.title = t; b.setAttribute('aria-label', t);
