@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ספר המידות</title>
-<meta name="app-build" content="34b8821af9">
+<meta name="app-build" content="5dfe83b921">
 <script>
 /* עדכון אוטומטי: בכל פתיחה בודקים אם עלתה גרסה חדשה לאתר (בלי מטמון), ואם כן – טוענים אותה מיד */
 (function(){try{
   if(!/^https?:$/.test(location.protocol)) return;
-  var cur='34b8821af9';
+  var cur='5dfe83b921';
   setTimeout(function(){
     fetch(location.pathname+'?_chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="app-build" content="([0-9a-f]{6,})"/); if(!m||m[1]===cur) return;
@@ -10131,7 +10131,9 @@
     const allPickup = letters.filter(ch=>ch !== ' ');
     const bossLetter = allPickup[allPickup.length-1];
     const pickupLetters = allPickup.slice(0, -1);
-    const reachableSpans = grounds.filter(g=>g.x1 < bossZoneX).map(g=>({x1:g.x1+20, x2:Math.min(g.x2,bossZoneX)-20, y:RN_GROUND_Y-30}))
+    // x1 never earlier than 120: the player starts at x=40 facing forward, and letters that used to be
+    // placed at x=20 (behind the start) were simply never seen — the boss gate then stayed shut forever.
+    const reachableSpans = grounds.filter(g=>g.x1 < bossZoneX).map(g=>({x1:Math.max(g.x1+20, 120), x2:Math.min(g.x2,bossZoneX)-20, y:RN_GROUND_Y-30}))
       .concat(regularPlatforms.filter(p=>p.x1 < bossZoneX).map(p=>({x1:p.x1+10, x2:p.x2-10, y:p.y-24})))
       .filter(s=>s.x2 > s.x1);
     // Letters are now spread out with a genuine minimum gap between them
@@ -10665,6 +10667,13 @@
         rnBossGateWarned = true;
         ttPlayDecoySound();
       }
+      // a clear message instead of only a sound: how many letters are still missing, and which way they are
+      const nowTs = performance.now();
+      if(nowTs - rnGateHintTs > 2600){
+        rnGateHintTs = nowTs;
+        const missing = rnLevelData.letters.filter(x=>!x.collected).length;
+        rnSpawnPopup(p.x + RN_PLAYER_W/2, p.y - 24, '⬅️', missing === 1 ? 'חסרה עוד אות אחת – חזרו לאסוף אותה' : 'חסרות עוד ' + missing + ' אותיות – חזרו לאסוף', 2400);
+      }
     }
     if(allCollected && !rnBoss && p.x + RN_PLAYER_W > rnLevelData.bossZoneX){
       rnBoss = {
@@ -10891,6 +10900,7 @@
   }
 
   let rnBossGateWarned = false;
+  let rnGateHintTs = 0;
 
   function rnJump(){
     if(!rnRunning || rnPaused || !rnPlayer) return;
