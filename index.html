@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ספר המידות</title>
-<meta name="app-build" content="7ec60d8048">
+<meta name="app-build" content="91874e15d6">
 <script>
 /* עדכון אוטומטי: בכל פתיחה בודקים אם עלתה גרסה חדשה לאתר (בלי מטמון), ואם כן – טוענים אותה מיד */
 (function(){try{
   if(!/^https?:$/.test(location.protocol)) return;
-  var cur='7ec60d8048';
+  var cur='91874e15d6';
   setTimeout(function(){
     fetch(location.pathname+'?_chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="app-build" content="([0-9a-f]{6,})"/); if(!m||m[1]===cur) return;
@@ -1071,6 +1071,13 @@
     font-family:var(--font-body); font-size:16px; line-height:1.85; color:var(--ink); white-space:pre-wrap;
   }
   .amira-pending{ color:var(--ink-soft); font-style:italic; }
+  /* האמירה עצמה – על רקע שקוף בגוון זהב, כדי להבדיל בינה לבין הדיבור מספר המידות שמעליה */
+  .amira-kuntres-amira{
+    background:rgba(169,133,47,.11); border:1px solid rgba(169,133,47,.30); border-radius:12px;
+    padding:11px 14px 12px; margin-top:4px;
+  }
+  .amira-kuntres-amira .amira-kuntres-title{ font-weight:700; }
+  body[data-theme="night"] .amira-kuntres-amira{ background:rgba(201,162,76,.12); border-color:rgba(201,162,76,.32); }
 
   /* whatsapp floating button */
   #whatsappFab{
@@ -3370,7 +3377,7 @@
       </div>
 
       <div class="settings-group">
-        <div class="settings-group-title">🔊 הקראה</div>
+        <div class="settings-group-title">🗣️ הקראה</div>
         <button class="edit-confirm" id="btnCheckVoice" style="width:100%; margin-bottom:12px;">🔎 בדיקת קול עברי במכשיר</button>
         <div class="tc-row">
           <span class="tc-label">להקריא את מספר הסעיף</span>
@@ -6459,7 +6466,7 @@
       ${hasOwnText ? `<div style="display:flex; gap:8px; margin-top:10px;">
         <button class="amira-copy" id="amiraCopyBtn" style="flex:1; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--paper-2); font-family:var(--font-ui); font-size:13px; cursor:pointer;">📋 העתקה</button>
         <button class="amira-print" id="amiraPrintBtn" style="flex:1; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--paper-2); font-family:var(--font-ui); font-size:13px; cursor:pointer;">🖨️ הדפסה</button>
-        <button class="amira-speak" id="amiraSpeakBtn" style="flex:1; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--paper-2); font-family:var(--font-ui); font-size:13px; cursor:pointer;">🔊 הקראה</button>
+        <button class="amira-speak" id="amiraSpeakBtn" style="flex:1; padding:10px; border-radius:10px; border:1px solid var(--line); background:var(--paper-2); font-family:var(--font-ui); font-size:13px; cursor:pointer;">🗣️ הקראה</button>
       </div>` : ''}
       <button class="amira-close" id="amiraCloseBtn">סגור</button>`;
     document.getElementById('amiraOverlay').classList.add('show');
@@ -7835,14 +7842,14 @@
   // embedded amira modal). Unlike speakCurrentItem/driving mode, this doesn't
   // queue up further items — one press speaks the given text, a second press
   // (or pressing another speak button) stops it. The triggering button's own
-  // label toggles between "🔊 הקראה" and "⏹️ עצור" so the user can see it's playing.
+  // label toggles between "🗣️ הקראה" and "⏹️ עצור" so the user can see it's playing.
   let activeSpeakBtn = null;
   function speakToggle(text, btnEl){
     if(!ensureHebrewVoice()) return;
     const wasThisBtnSpeaking = (activeSpeakBtn === btnEl) && speechSynthesis.speaking;
     if(speechSynthesis.speaking){
       speechSynthesis.cancel();
-      if(activeSpeakBtn) activeSpeakBtn.textContent = '🔊 הקראה';
+      if(activeSpeakBtn) activeSpeakBtn.textContent = '🗣️ הקראה';
       activeSpeakBtn = null;
     }
     if(wasThisBtnSpeaking) return; // this button's own speech was just stopped — don't restart it
@@ -7851,7 +7858,7 @@
     if(voice) utter.voice = voice;
     utter.lang = voice ? voice.lang : 'he-IL';
     utter.rate = settings.ttsRate || 0.95;
-    utter.onend = ()=>{ if(btnEl) btnEl.textContent = '🔊 הקראה'; if(activeSpeakBtn===btnEl) activeSpeakBtn = null; };
+    utter.onend = ()=>{ if(btnEl) btnEl.textContent = '🗣️ הקראה'; if(activeSpeakBtn===btnEl) activeSpeakBtn = null; };
     if(btnEl) btnEl.textContent = '⏹️ עצור';
     activeSpeakBtn = btnEl;
     speechSynthesis.speak(utter);
@@ -13078,7 +13085,7 @@
         <input id="tznSearchInput" type="text" placeholder="חיפוש שם צדיק...">
         <button class="tzn-search-clear" id="tznSearchClear" type="button">✕</button>
       </div>
-      <button class="tzn-menu-btn" id="tznSpeakBtn" type="button" title="הקראה" style="width:auto; padding:0 10px; font-size:13px;">🔊 הקראה</button>
+      <button class="tzn-menu-btn" id="tznSpeakBtn" type="button" title="הקראה" style="width:auto; padding:0 10px; font-size:13px;">🗣️ הקראה</button>
     </div>
     <div id="tznOverlay"></div>
     <nav id="tznSidebar">
@@ -13154,7 +13161,7 @@ function tznBuildFullReadQueue(){
 function tznStopReading(){
   tznReadActive = false;
   if('speechSynthesis' in window) speechSynthesis.cancel();
-  tznSpeakBtnEl.textContent = '🔊 הקראה';
+  tznSpeakBtnEl.textContent = '🗣️ הקראה';
 }
 function tznSpeakNext(){
   if(!tznReadActive) return;
@@ -13195,7 +13202,7 @@ tznSpeakBtnEl.addEventListener('click', ()=>{
   if(tznReadActive){ tznStopReading(); return; }
   if(!ensureHebrewVoice()) return;
   if('speechSynthesis' in window) speechSynthesis.cancel();
-  if(typeof activeSpeakBtn !== 'undefined' && activeSpeakBtn){ activeSpeakBtn.textContent = '🔊 הקראה'; activeSpeakBtn = null; }
+  if(typeof activeSpeakBtn !== 'undefined' && activeSpeakBtn){ activeSpeakBtn.textContent = '🗣️ הקראה'; activeSpeakBtn = null; }
   tznReadQueue = tznBuildFullReadQueue();
   if(!tznReadQueue.length){ toast('אין כרגע טקסט להקראה'); return; }
   tznReadIdx = tznFindQueueStartIndex(tznReadQueue);
@@ -13714,7 +13721,7 @@ tznBody._tznRerender = tznRender;
       const actionsBtnHtml = `<div style="display:flex; gap:6px; margin-top:10px;">
         ${hasOwnText ? `<button class="amira-kuntres-copy" data-amira="${a.id}" style="flex:1; padding:7px; border-radius:8px; border:1px solid var(--line); background:var(--paper); font-family:var(--font-ui); font-size:12px; cursor:pointer;">📋 העתקה</button>
         <button class="amira-kuntres-print" data-amira="${a.id}" style="flex:1; padding:7px; border-radius:8px; border:1px solid var(--line); background:var(--paper); font-family:var(--font-ui); font-size:12px; cursor:pointer;">🖨️ הדפסה</button>
-        <button class="amira-kuntres-speak" data-amira="${a.id}" style="flex:1; padding:7px; border-radius:8px; border:1px solid var(--line); background:var(--paper); font-family:var(--font-ui); font-size:12px; cursor:pointer;">🔊 הקראה</button>` : ''}
+        <button class="amira-kuntres-speak" data-amira="${a.id}" style="flex:1; padding:7px; border-radius:8px; border:1px solid var(--line); background:var(--paper); font-family:var(--font-ui); font-size:12px; cursor:pointer;">🗣️ הקראה</button>` : ''}
         ${adminMode ? `<button class="amira-kuntres-edit" data-amira="${a.id}" style="flex:1; padding:7px; border-radius:8px; border:1px solid var(--gold); background:var(--paper); font-family:var(--font-ui); font-size:12px; cursor:pointer; color:var(--maroon-dark);">✏️ ערוך</button>
         <button class="amira-kuntres-del" data-amira="${a.id}" style="flex:1; padding:7px; border-radius:8px; border:1px solid #c0392b; background:#fdecea; font-family:var(--font-ui); font-size:12px; cursor:pointer; color:#c0392b;">🗑️ מחק</button>` : ''}
       </div>`;
@@ -13723,10 +13730,12 @@ tznBody._tznRerender = tznRender;
       card.id = 'amira-card-' + a.id;
       card.innerHTML = `
         ${sourcesHtml}
-        <div class="amira-kuntres-title">📖 ${escapeHtml(a.title)}</div>
-        <div class="amira-kuntres-src2">${escapeHtml(a.source||'')}</div>
-        ${bodyHtml}
-        ${linkHtml}
+        <div class="amira-kuntres-amira">
+          <div class="amira-kuntres-title">📖 ${escapeHtml(a.title)}</div>
+          <div class="amira-kuntres-src2">${escapeHtml(a.source||'')}</div>
+          ${bodyHtml}
+          ${linkHtml}
+        </div>
         ${actionsBtnHtml}
       `;
       el.appendChild(card);
