@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ספר המידות</title>
-<meta name="app-build" content="b0add3ef9a">
+<meta name="app-build" content="d1e17802dc">
 <script>
 /* עדכון אוטומטי: בכל פתיחה בודקים אם עלתה גרסה חדשה לאתר (בלי מטמון), ואם כן – טוענים אותה מיד */
 (function(){try{
   if(!/^https?:$/.test(location.protocol)) return;
-  var cur='b0add3ef9a';
+  var cur='d1e17802dc';
   setTimeout(function(){
     fetch(location.pathname+'?_chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="app-build" content="([0-9a-f]{6,})"/); if(!m||m[1]===cur) return;
@@ -131,6 +131,56 @@
     padding:12px 14px; margin:6px 0 10px; font-family:var(--font-ui); font-size:12.5px; color:var(--ink); }
   .pc-help b{ color:var(--maroon-dark); display:block; margin-bottom:6px; }
   .pc-help ol{ margin:0; padding-inline-start:18px; line-height:1.75; }
+  .pc-help .pc-help-t{ color:var(--maroon-dark); font-weight:700; margin-bottom:6px; }
+  .pc-help ol b{ display:inline; color:var(--maroon-dark); }
+  .pc-sec{ font-family:var(--font-display); font-size:15px; font-weight:700; color:var(--maroon-dark);
+    margin:4px 2px 6px; display:flex; align-items:center; gap:8px; }
+  .pc-sec::after{ content:''; flex:1; height:1px; background:linear-gradient(to left, transparent, rgba(169,133,47,.55)); }
+  .pc-modes{ display:flex; gap:7px; margin-bottom:6px; }
+  .pc-mode{ flex:1; background:var(--paper-2); border:1.5px solid var(--line); border-radius:12px;
+    padding:9px 4px 8px; cursor:pointer; display:flex; flex-direction:column; align-items:center; gap:3px; }
+  .pc-mode i{ font-style:normal; font-size:22px; line-height:1; }
+  .pc-mode b{ font-family:var(--font-ui); font-size:12.5px; color:var(--ink); font-weight:700; }
+  .pc-mode.on{ border-color:var(--maroon); background:rgba(122,30,30,.08); box-shadow:0 0 0 1px var(--maroon) inset; }
+  .pc-mode.on b{ color:var(--maroon-dark); }
+  .pc-note{ font-family:var(--font-ui); font-size:12.5px; color:var(--ink-soft); line-height:1.55; margin:0 4px 10px; }
+  .pc-lbl{ display:block; font-family:var(--font-ui); font-size:12px; color:var(--ink-soft); margin:9px 0 3px; }
+  .pc-in{ width:100%; box-sizing:border-box; border:1px solid var(--line); border-radius:9px; background:var(--paper);
+    padding:8px 10px; font-family:var(--font-body); font-size:15px; color:var(--ink); resize:vertical; }
+  .pc-go{ display:flex; gap:8px; margin:12px 0 9px; }
+  .pc-btn{ flex:1; border:none; border-radius:12px; padding:13px 6px; font-family:var(--font-ui); font-size:15.5px;
+    font-weight:700; background:var(--maroon); color:#F3E9D2; cursor:pointer; }
+  .pc-btn-sec{ background:var(--paper-2); color:var(--maroon-dark); border:1.5px solid var(--maroon); }
+  .pv-back{ position:fixed; inset:0; z-index:520; background:#5b5f66; display:flex; flex-direction:column; }
+  .pv-bar{ display:flex; align-items:center; gap:8px; padding:9px 10px; padding-top:calc(9px + env(safe-area-inset-top,0px));
+    background:var(--paper); border-bottom:1px solid var(--line); }
+  .pv-info{ flex:1; min-width:0; text-align:center; font-family:var(--font-ui); font-size:12.5px; color:var(--ink); line-height:1.4; }
+  .pv-x, .pv-p{ border-radius:999px; padding:8px 13px; font-family:var(--font-ui); font-size:13.5px; cursor:pointer; white-space:nowrap; }
+  .pv-x{ background:transparent; border:1px solid var(--line); color:var(--ink); }
+  .pv-p{ background:var(--maroon); border:none; color:#F3E9D2; font-weight:700; }
+  .pv-warn{ font-family:var(--font-ui); font-size:12.5px; line-height:1.55; color:#3b2a10; background:#f6ecd0; }
+  .pv-warn:empty{ display:none; }
+  .pv-warn div{ padding:7px 12px; border-bottom:1px solid rgba(0,0,0,.06); }
+  .pv-list{ flex:1; overflow:auto; padding:14px 10px calc(40px + env(safe-area-inset-bottom,0px)); -webkit-overflow-scrolling:touch; }
+  .pv-item{ margin:0 auto 16px; text-align:center; }
+  .pv-paper{ display:inline-block; background:#fff; box-shadow:0 3px 14px rgba(0,0,0,.35); text-align:start; box-sizing:content-box; vertical-align:top; }
+  .pv-paper.pv-rot{ transform:rotate(180deg); }
+  .pv-cap{ font-family:var(--font-ui); font-size:12px; color:#eef0f3; margin-top:5px; }
+  .pv-wait{ color:#fff; text-align:center; font-family:var(--font-ui); padding:40px 0; }
+  .bp-cover{ text-align:center; justify-content:space-between; color:#000; }
+  .bp-cv-bsd{ text-align:right; font-size:10pt; }
+  .bp-cv-mid{ display:flex; flex-direction:column; align-items:center; gap:5mm; padding:0 6%; }
+  .bp-cv-kicker{ font-size:11pt; color:#444; letter-spacing:.02em; }
+  .bp-cv-title{ font-size:30pt; font-weight:900; line-height:1.25; color:#1d2a48; }
+  .bp-cv-sub{ font-size:13pt; line-height:1.6; color:#222; margin-top:2mm; }
+  .bp-cv-foot{ font-size:11pt; color:#444; min-height:1em; }
+  .bp-orn{ width:62%; height:auto; color:#a9852f; display:block; }
+  .bp-head:empty{ display:none; }
+  bp-h{ display:block; text-align:center; font-weight:700; font-size:1.12em; color:#1d2a48; margin:9pt 0 4pt; line-height:1.4; }
+  bp-h::after{ content:'✦'; display:block; font-size:.55em; font-weight:400; color:#a9852f; margin-top:1pt; }
+  .bp-page.bp-blank .bp-head, .bp-page.bp-blank .bp-foot{ display:none; }
+  .bp-bsd .bp-page{ position:relative; }
+  .bp-bsd .bp-page:not(.bp-cover):not(.bp-blank)::before{ content:'בס״ד'; position:absolute; top:0; right:0; font-size:8pt; color:#333; }
   .pc-set{ background:var(--paper-2); border:1px solid var(--line); border-radius:12px;
     padding:10px 12px; margin-bottom:11px; }
   .pc-grp{ display:flex; align-items:center; gap:6px; margin-bottom:7px; }
@@ -2111,6 +2161,39 @@
   <div id="printChooser" class="pc-back" style="display:none;">
     <div class="pc-box">
       <h3 id="pcTitle">אופן ההדפסה</h3>
+      <div class="pc-sec">צורת ההדפסה</div>
+      <div class="pc-modes">
+        <button type="button" class="pc-mode" data-x="mode" data-val="plain"><i>📄</i><b>חוברת רגילה</b></button>
+        <button type="button" class="pc-mode" data-x="mode" data-val="booklet"><i>📖</i><b>קונטרס לקיפול</b></button>
+        <button type="button" class="pc-mode" data-x="mode" data-val="twoup"><i>📕</i><b>שני עמודים בדף</b></button>
+      </div>
+      <div class="pc-note" id="pcModeNote"></div>
+      <div class="pc-set">
+        <div class="pc-grp" id="pcSizeGrp"><span>גודל דף</span>
+          <button type="button" data-bsize="a4">A4</button>
+          <button type="button" data-bsize="a5">A5</button>
+        </div>
+        <div class="pc-grp"><span>דו־צדדי</span>
+          <button type="button" data-x="side" data-val="all">המדפסת לבד</button>
+          <button type="button" data-x="side" data-val="a">ידני צד א׳</button>
+          <button type="button" data-x="side" data-val="b">ידני צד ב׳</button>
+        </div>
+        <div class="pc-grp" id="pcFlowGrp"><span>פרקים</span>
+          <button type="button" data-x="flow" data-val="page">כל אחד בעמוד חדש</button>
+          <button type="button" data-x="flow" data-val="cont">ברצף · חוסך נייר</button>
+        </div>
+        <label class="pc-chk" id="pcFlipRow"><input type="checkbox" data-xchk="flipB"> לסובב את צד ב׳ (אם יצא הפוך)</label>
+      </div>
+      <div class="pc-help" id="pcHelp">
+        <div class="pc-help-t">איך מדפיסים דו־צדדי במדפסת רגילה</div>
+        <ol>
+          <li>בחר <b>ידני צד א׳</b> והדפס.</li>
+          <li>קח את הערימה כמו שיצאה, <b>בלי לסדר מחדש</b>, והחזר אותה למגש הנייר כשהצד המודפס פונה כלפי מטה והקצה העליון נכנס ראשון.</li>
+          <li>חזור לכאן ובחר <b>ידני צד ב׳</b>. הוא מודפס בסדר הפוך בכוונה, כי ערימה שהופכים חוזרת הפוך.</li>
+          <li>נסה קודם על שלושה־ארבעה דפים בלבד. לכל מדפסת יש כיוון הזנה משלה.</li>
+        </ol>
+      </div>
+      <div class="pc-sec">עיצוב הטקסט</div>
       <div class="pc-set">
         <div class="pc-grp"><span>שוליים</span>
           <button type="button" data-set="margin" data-val="8">צרים</button>
@@ -2140,35 +2223,40 @@
           <button type="button" data-set="font" data-val="noto">נוטו</button>
           <button type="button" data-set="font" data-val="david">דוד</button>
         </div>
+        <label class="pc-chk"><input type="checkbox" data-xchk="header"> כותרת בראש כל עמוד</label>
+        <label class="pc-chk"><input type="checkbox" data-xchk="nums"> מספרי עמודים</label>
+        <label class="pc-chk"><input type="checkbox" data-xchk="niqud"> עם ניקוד</label>
+        <label class="pc-chk"><input type="checkbox" data-xchk="bsd"> בס״ד בראש כל עמוד</label>
         <label class="pc-chk"><input type="checkbox" id="pcInclHash"> לכלול גם את ההשלמות</label>
       </div>
-      <button type="button" class="pc-opt" data-pc="plain">
-        <b>📄 חוברת רגילה</b>
-        <span>עמוד אחד בכל דף, לפי הגודל שנבחר בהגדרות</span>
-      </button>
-      <button type="button" class="pc-opt" data-pc="twoup">
-        <b>📕 קונטרס קטן — שני עמודים בדף</b>
-        <span>שני עמודי A5 זה לצד זה על דף A4 לרוחב. חוסך חצי מהנייר.</span>
-      </button>
-      <button type="button" class="pc-opt" data-pc="duplex1">
-        <b>🔄 דו־צדדי ידני — צד א׳</b>
-        <span>מדפיס את העמודים האי־זוגיים בלבד</span>
-      </button>
-      <button type="button" class="pc-opt" data-pc="duplex2">
-        <b>🔄 דו־צדדי ידני — צד ב׳</b>
-        <span>מדפיס את הזוגיים, בסדר הפוך, להדפסה על גב הדפים</span>
-      </button>
-      <div class="pc-help" id="pcHelp">
-        <b>איך מדפיסים דו־צדדי במדפסת רגילה</b>
-        <ol>
-          <li>בחר <b>צד א׳</b> והדפס. יצאו רק העמודים האי־זוגיים.</li>
-          <li>קח את הערימה כמו שיצאה, <b>בלי לסדר מחדש</b>, והחזר אותה למגש הנייר כשהצד המודפס פונה כלפי מטה והקצה העליון נכנס ראשון.</li>
-          <li>חזור לכאן ובחר <b>צד ב׳</b>. הוא מודפס בסדר הפוך בכוונה, כי ערימה שהופכים חוזרת הפוך.</li>
-          <li>נסה קודם על שלושה־ארבעה דפים בלבד. לכל דגם מדפסת יש כיוון הזנה משלו, ועדיף לגלות את זה על ארבעה דפים ולא על מאה.</li>
-        </ol>
+      <div class="pc-sec">כריכה</div>
+      <div class="pc-set">
+        <label class="pc-chk" style="margin-top:0"><input type="checkbox" data-xchk="cover"> 📕 להוסיף כריכה יפה בעמוד הראשון</label>
+        <div id="pcCoverBox" style="display:none">
+          <label class="pc-lbl" for="pcCoverTitle">שם החוברת</label>
+          <input type="text" class="pc-in" id="pcCoverTitle">
+          <label class="pc-lbl" for="pcCoverSub">עוד כמה מילים (לא חובה)</label>
+          <textarea class="pc-in" id="pcCoverSub" rows="2" placeholder="למשל: לעילוי נשמת… / לרפואת… / נדפס לזיכוי הרבים"></textarea>
+          <label class="pc-lbl" for="pcCoverDate">שורת תאריך (לא חובה)</label>
+          <input type="text" class="pc-in" id="pcCoverDate" placeholder="למשל: כסלו תשפ״ז">
+        </div>
+      </div>
+      <div class="pc-go">
+        <button type="button" class="pc-btn pc-btn-sec" id="pcPreview">👁 תצוגה מקדימה</button>
+        <button type="button" class="pc-btn" id="pcPrint">🖨 הדפסה</button>
       </div>
       <button type="button" class="pc-cancel" id="pcCancel">ביטול</button>
     </div>
+  </div>
+
+  <div id="printPreview" class="pv-back" style="display:none;">
+    <div class="pv-bar">
+      <button type="button" class="pv-x" id="pvBack">→ חזרה לשינויים</button>
+      <div class="pv-info" id="pvInfo"></div>
+      <button type="button" class="pv-p" id="pvPrint">🖨 הדפסה</button>
+    </div>
+    <div class="pv-warn" id="pvWarn"></div>
+    <div class="pv-list" id="pvList"></div>
   </div>
 
   <div id="statsScreen" style="display:none; flex-direction:column; height:100%;">
@@ -3801,7 +3889,8 @@
       return body;
     }
 
-    function fits() { return body.scrollHeight <= body.clientHeight; }
+    // with CSS columns the overflow goes sideways into an extra column, not down
+    function fits() { return body.scrollHeight <= body.clientHeight && body.scrollWidth <= body.clientWidth + 1; }
 
     function lineHeight() {
       var p = body.querySelector('p');
@@ -12465,14 +12554,16 @@
   // The engine hard-codes justify and a single column, so the extras ride in as CSS.
   function applyTypography(){
     const p = printPrefs();
-    const css = ['@media print{',
+    // Not print-only: the engine measures on screen, so columns and font must
+    // already be in force while it paginates (and the preview shows them too).
+    const css = ['',
       '  .bp-body p{text-align:' + (p.align === 'right' ? 'right' : 'justify') + '!important;',
-      '    font-family:' + (BOOKLET_FONTS[p.font] || BOOKLET_FONTS.frank) + '!important;}'];
+      '    font-family:' + (BOOKLET_FONTS[p.font] || BOOKLET_FONTS.frank) + '!important;}',
+      '  .bp-cover{font-family:' + (BOOKLET_FONTS[p.font] || BOOKLET_FONTS.frank) + '}'];
     if(+p.cols > 1){
       css.push('  .bp-body{column-count:' + (+p.cols) + ';column-gap:7mm;',
                '    column-rule:1px solid #ddd;}');
     }
-    css.push('}');
     let st = document.getElementById('booklet-typo-css');
     if(!st){ st = document.createElement('style'); st.id = 'booklet-typo-css'; document.head.appendChild(st); }
     st.textContent = css.join('\n');
@@ -12528,12 +12619,17 @@
     });
     return out;
   }
-  // ---- two extra layouts, built ON TOP of the engine's output ----
+  // ---- layouts, built ON TOP of the engine's output ----
   // The engine paginates and hands back .bp-page elements inside #booklet-print-out.
-  // These two take that finished set and re-arrange the SHEETS, without touching
-  // pagination itself.
+  // The layouts below take that finished set and arrange the SHEET SIDES:
+  //   plain   — one page per sheet side
+  //   twoup   — two A5 pages side by side on A4 landscape, reading order
+  //   booklet — saddle-stitch: fold the stack in the middle and staple
+  // Every layout yields an ordered list of sides, so manual duplex (side A /
+  // side B) and the preview work the same way for all of them.
   const PAGES_BOX = 'booklet-print-out';
   const LAYOUT_CSS = 'booklet-layout-css';
+  const SHEET_W = 285, SHEET_H = 197, HALF_W = 142.5;   // A4 landscape inside a 6mm @page margin
   function layoutStyle(css){
     let st = document.getElementById(LAYOUT_CSS);
     if(!st){ st = document.createElement('style'); st.id = LAYOUT_CSS; document.head.appendChild(st); }
@@ -12543,16 +12639,151 @@
     const st = document.getElementById(LAYOUT_CSS);
     if(st) st.remove();
   }
-  // Build the pages without printing, so we can re-arrange them first.
-  function buildPagesSilently(groups){
+  const PRINT_X_DEF = { mode:'plain', side:'all', header:true, nums:true, niqud:true, bsd:false, flipB:false,
+                        cover:false, coverSub:'', coverDate:'', flow:'page' };
+  function printX(){ return Object.assign({}, PRINT_X_DEF, settings.printX || {}); }
+  function saveX(patch){ settings.printX = Object.assign(printX(), patch); saveJSON(LS_SETTINGS, settings); }
+  function halfMargin(){ return Math.max(6, Math.round((+printPrefs().margin || 12) * 0.75)); }
+  function layoutOpts(mode, x){
+    let o;
+    if(mode === 'plain') o = Object.assign({}, bookletOpts());
+    else {
+      const m = halfMargin();
+      const a5 = BOOKLET_SIZES.a5, chosen = settings.printPrefs || {};
+      o = Object.assign({}, bookletOpts(), {
+        pageW: HALF_W - 2*m, pageH: SHEET_H - 2*m, margin: 6,
+        size: chosen.size || a5.size, line: chosen.line != null ? +chosen.line : a5.line
+      });
+      o.halfM = m;
+    }
+    o.auto = false;
+    o.numbers = !!x.nums;
+    const off = x.cover ? 1 : 0;
+    o.numFormat = n=> '— ' + (n + off) + ' —';
+    return o;
+  }
+  // "Continuous" flow: every chapter used to open a fresh page, so short
+  // chapters left most of a page blank. Here the chapter title rides inside its
+  // first paragraph as a <bp-h> (no spaces in the tag, so the engine's word
+  // split can never tear it) and the text keeps flowing.
+  function flowGroups(groups, title){
+    if(groups.length < 2) return groups;
+    const blocks = [];
+    groups.forEach(g=>{
+      const h = '<bp-h>' + escapeHtml(String(g.head || '').replace(/^ספר המידות · /, '')).replace(/ /g, '&nbsp;') + '</bp-h>';
+      g.blocks.forEach((b, i)=>{
+        blocks.push(i === 0 && g.head ? (/^<p>/.test(b) ? b.replace(/^<p>/, '<p>' + h) : '<p>' + h + '</p>' + b) : b);
+      });
+    });
+    return [{ head: title ? ('ספר המידות · ' + title) : (groups[0].head || ''), blocks }];
+  }
+  function prepGroups(groups, x, title){
+    if(x.flow === 'cont') groups = flowGroups(groups, title);
+    return groups.map(g=>({
+      head: x.header ? (x.niqud ? g.head : stripNiqud(g.head || '')) : '',
+      blocks: x.niqud ? g.blocks : g.blocks.map(b=> stripNiqud(b))
+    }));
+  }
+  const COVER_ORN = '<svg viewBox="0 0 300 16" class="bp-orn"><path d="M10 8h125M165 8h125" stroke="currentColor" stroke-width="1.2"/><path d="M150 1l7 7-7 7-7-7z" fill="currentColor"/><circle cx="138" cy="8" r="2" fill="currentColor"/><circle cx="162" cy="8" r="2" fill="currentColor"/></svg>';
+  function coverPage(o, x, title){
+    const pg = document.createElement('div');
+    pg.className = 'bp-page bp-cover';
+    pg.style.width = o.pageW + 'mm';
+    pg.style.height = o.pageH + 'mm';
+    pg.innerHTML =
+      '<div class="bp-cv-bsd">בס״ד</div>' +
+      '<div class="bp-cv-mid">' +
+        '<div class="bp-cv-kicker">ספר המידות · לרבי נחמן מברסלב</div>' +
+        COVER_ORN +
+        '<div class="bp-cv-title">' + escapeHtml(title || 'ספר המידות') + '</div>' +
+        COVER_ORN +
+        (x.coverSub ? '<div class="bp-cv-sub">' + escapeHtml(x.coverSub).replace(/\n/g,'<br>') + '</div>' : '') +
+      '</div>' +
+      '<div class="bp-cv-foot">' + (x.coverDate ? escapeHtml(x.coverDate) : '') + '</div>';
+    return pg;
+  }
+  function blankPage(o){
+    const b = document.createElement('div');
+    b.className = 'bp-page bp-blank';
+    b.style.width = o.pageW + 'mm';
+    b.style.height = o.pageH + 'mm';
+    return b;
+  }
+  // Builds the pages and arranges them into sides. Leaves the result inside
+  // #booklet-print-out with the layout CSS in place, ready to print or copy.
+  function buildLayout(groups, coverTitle){
     const usable = (groups || []).filter(g=> g && g.blocks && g.blocks.length);
-    if(!usable.length) return null;
+    if(!usable.length || !window.BookletPrint) return null;
+    const x = printX(), mode = x.mode;
     const area = document.getElementById('printArea');
     if(area) area.innerHTML = '';
-    const opts = Object.assign({}, bookletOpts(), {auto:false});
-    window.BookletPrint.print(usable, opts);
+    applyTypography();
+    const o = layoutOpts(mode, x);
+    const textPages = window.BookletPrint.build(prepGroups(usable, x, coverTitle), o);
     const box = document.getElementById(PAGES_BOX);
-    return box ? [...box.querySelectorAll('.bp-page')] : null;
+    let pages = [...box.querySelectorAll('.bp-page')];
+    if(x.cover) pages.unshift(coverPage(o, x, coverTitle));
+    let sides = [];
+    if(mode === 'plain'){
+      sides = pages.map(p=> [p]);
+    } else if(mode === 'twoup'){
+      for(let i = 0; i < pages.length; i += 2) sides.push([pages[i], pages[i+1] || blankPage(o)]);
+    } else {
+      // saddle stitch, opening from the right like a Hebrew book:
+      // outer sheet front = [page N on the right | page 1 on the left]
+      while(pages.length % 4) pages.push(blankPage(o));
+      const N = pages.length, P = k=> pages[k-1];
+      for(let i = 0; i < N/4; i++){
+        sides.push([P(N-2*i), P(2*i+1)]);     // front: right, left
+        sides.push([P(2*i+2), P(N-2*i-1)]);   // back:  right, left
+      }
+    }
+    // tag each side with its sheet/face before the manual-duplex filter
+    sides = sides.map((cells, i)=> ({ cells, idx:i, face: (i % 2) ? 'b' : 'a' }));
+    const totalSides = sides.length;
+    if(x.side === 'a') sides = sides.filter(s=> s.face === 'a');
+    else if(x.side === 'b') sides = sides.filter(s=> s.face === 'b').reverse();
+    box.innerHTML = '';
+    box.classList.toggle('bp-bsd', !!x.bsd);
+    sides.forEach(s=>{
+      let el;
+      if(mode === 'plain') el = s.cells[0];
+      else {
+        el = document.createElement('div');
+        el.className = 'bp-sheet' + (mode === 'booklet' ? ' bp-fold' : ' bp-cut');
+        // the sheet is laid out left-to-right; cells are [right, left]
+        el.appendChild(s.cells[1]); el.appendChild(s.cells[0]);
+      }
+      if(x.flipB && s.face === 'b' && (x.side !== 'all' || mode === 'booklet')) el.classList.add('bp-rot');
+      el.dataset.side = s.face; el.dataset.idx = s.idx;
+      box.appendChild(el);
+    });
+    if(mode === 'plain') clearLayout();
+    else layoutStyle(sheetCss(o.halfM, true));
+    const sheets = mode === 'plain'
+      ? (x.side === 'all' ? totalSides : sides.length)
+      : (mode === 'booklet' ? totalSides/2 : totalSides);
+    return { mode, x, textPages, pages: pages.length, sides: sides.length, sheets, o };
+  }
+  function sheetCss(m, forPrint){
+    const inner = [
+      '.bp-sheet{display:flex;direction:ltr;width:' + SHEET_W + 'mm;height:' + SHEET_H + 'mm;',
+      '  position:relative;overflow:hidden;background:#fff;box-sizing:border-box}',
+      '.bp-sheet>.bp-page{width:' + HALF_W + 'mm!important;height:' + SHEET_H + 'mm!important;',
+      '  padding:' + m + 'mm;box-sizing:border-box;flex:0 0 auto;break-after:auto!important;page-break-after:auto!important}',
+      '.bp-sheet.bp-cut>.bp-page:first-child{border-right:.4pt dashed #bbb}',
+      '.bp-sheet.bp-fold::before,.bp-sheet.bp-fold::after{content:"";position:absolute;left:50%;height:4mm;border-left:.4pt solid #999}',
+      '.bp-sheet.bp-fold::before{top:0}',
+      '.bp-sheet.bp-fold::after{bottom:0}',
+      '.bp-sheet>.bp-page::before{top:' + Math.max(1, m/2 - 1.5).toFixed(1) + 'mm!important;right:' + m + 'mm!important}'
+    ];
+    if(!forPrint) return inner.join('\n');
+    return ['@media print{',
+      '  @page{size:A4 landscape;margin:6mm}',
+      inner.join('\n'),
+      '  .bp-sheet{break-after:page;page-break-after:always}',
+      '  .bp-sheet:last-child{break-after:auto;page-break-after:auto}',
+      '}'].join('\n');
   }
   function firePrint(){
     document.body.classList.add('bp-printing');
@@ -12565,91 +12796,133 @@
       }, 400);
     }, 60);
   }
+  function layoutSummary(r){
+    if(!r) return '';
+    const names = { plain:'חוברת רגילה', twoup:'שני עמודים בדף', booklet:'קונטרס לקיפול' };
+    let s = r.pages + ' עמודים · ' + names[r.mode] + ' · ' + r.sheets + ' דפים';
+    if(r.x.side === 'a') s += ' · מדפיס צד א׳ (' + r.sides + ')';
+    if(r.x.side === 'b') s += ' · מדפיס צד ב׳ (' + r.sides + ')';
+    return s;
+  }
+  function runPrint(groups, title){
+    let r;
+    try{ r = buildLayout(groups, title); }
+    catch(err){ console.error('booklet layout failed', err); r = null; }
+    if(!r){ try{ window.BookletPrint.clear(); }catch(e){} clearLayout(); toast('אין מה להדפיס'); return 0; }
+    firePrint();
+    toast('מכין להדפסה · ' + layoutSummary(r));
+    return r.pages;
+  }
 
-  // A: two A5 pages side by side on one A4 sheet, landscape.
-  // Reading order in Hebrew is right-to-left, so the FIRST page of each pair goes
-  // on the right — the sheet is a right-to-left flex row.
-  function printTwoUpA5(groups){
-    const prev = settings.bookletSize;
-    settings.bookletSize = 'a5';
-    const pages = buildPagesSilently(groups);
-    settings.bookletSize = prev;
-    if(!pages || !pages.length){ toast('אין מה להדפיס'); return 0; }
+  // ---- preview: the same sides, copied into an on-screen viewer ----
+  function renderPreview(groups, title){
+    const list = document.getElementById('pvList');
+    const info = document.getElementById('pvInfo');
+    const warn = document.getElementById('pvWarn');
+    let r;
+    try{ r = buildLayout(groups, title); }catch(err){ console.error(err); r = null; }
+    list.innerHTML = '';
+    if(!r){ info.textContent = 'אין מה להציג'; warn.innerHTML = ''; try{ window.BookletPrint.clear(); }catch(e){} return; }
     const box = document.getElementById(PAGES_BOX);
-    const sheets = document.createDocumentFragment();
-    for(let i = 0; i < pages.length; i += 2){
-      const sheet = document.createElement('div');
-      sheet.className = 'bp-sheet';
-      sheet.appendChild(pages[i]);
-      if(pages[i+1]) sheet.appendChild(pages[i+1]);
-      else {
-        const blank = document.createElement('div');
-        blank.className = 'bp-page bp-blank';
-        sheet.appendChild(blank);
+    const items = [...box.children];
+    const isPlain = r.mode === 'plain';
+    const pm = isPlain ? (+r.o.margin || 12) : 0;
+    items.forEach((el, k)=>{
+      const wrap = document.createElement('div');
+      wrap.className = 'pv-item';
+      const paper = document.createElement('div');
+      paper.className = 'pv-paper' + (el.classList.contains('bp-rot') ? ' pv-rot' : '');
+      if(isPlain){
+        paper.style.padding = pm + 'mm';
+        paper.style.width = (r.o.pageW + 2*pm) + 'mm';
       }
-      sheets.appendChild(sheet);
+      paper.appendChild(el);   // move, the box is cleared right after
+      const cap = document.createElement('div');
+      cap.className = 'pv-cap';
+      const sheetNo = r.mode === 'booklet' ? Math.floor((+el.dataset.idx)/2) + 1 : (+el.dataset.idx) + 1;
+      cap.textContent = isPlain
+        ? ('עמוד ' + ((+el.dataset.idx) + 1) + (r.x.side !== 'all' ? ' · צד ' + (el.dataset.side === 'a' ? 'א׳' : 'ב׳') : ''))
+        : ('דף ' + sheetNo + (r.mode === 'booklet' || r.x.side !== 'all' ? ' · צד ' + (el.dataset.side === 'a' ? 'א׳' : 'ב׳') : ''));
+      wrap.appendChild(paper); wrap.appendChild(cap);
+      list.appendChild(wrap);
+    });
+    list.classList.toggle('bp-bsd', !!r.x.bsd);
+    let st = document.getElementById('pv-sheet-css');
+    if(!st){ st = document.createElement('style'); st.id = 'pv-sheet-css'; document.head.appendChild(st); }
+    st.textContent = isPlain ? '' : sheetCss(r.o.halfM, false).replace(/(^|\n|,)\s*\.bp-sheet/g, '$1#pvList .bp-sheet');
+    try{ window.BookletPrint.clear(); }catch(e){}
+    clearLayout();
+    info.textContent = layoutSummary(r);
+    const w = [];
+    if(r.mode === 'booklet'){
+      w.push('📖 להדפיס <b>דו־צדדי, היפוך בצד הקצר</b>. אחר כך מקפלים את כל הערימה באמצע ומהדקים — והעמודים יוצאים לפי הסדר, כמו ספר שנפתח מימין.');
+      if(r.sheets > 10) w.push('⚠️ הקונטרס יוצא ' + r.sheets + ' דפים — עבה לקיפול אחד. אפשר לבחור כתב קטן יותר או להדפיס בכמה חלקים.');
     }
-    box.innerHTML = '';
-    box.appendChild(sheets);
-    layoutStyle([
-      '@media print{',
-      '  @page{size:A4 landscape;margin:6mm}',
-      '  .bp-sheet{display:flex;flex-direction:row-reverse;justify-content:center;',
-      '    align-items:flex-start;gap:0;width:100%;height:190mm;',
-      '    break-after:page;page-break-after:always}',
-      '  .bp-sheet:last-child{break-after:auto;page-break-after:auto}',
-      '  .bp-sheet .bp-page{width:138mm!important;height:190mm!important;',
-      '    break-after:auto!important;page-break-after:auto!important;',
-      '    border-inline-start:1px dashed #bbb}',
-      '  .bp-sheet .bp-page:first-child{border-inline-start:none}',
-      '  .bp-blank{visibility:hidden}',
-      '}'
-    ].join('\n'));
-    firePrint();
-    toast('שני עמודי A5 בכל דף · ' + Math.ceil(pages.length/2) + ' דפים');
-    return pages.length;
+    if(r.x.side !== 'all') w.push('🔄 דו־צדדי ידני: מדפיסים קודם צד א׳, מחזירים את הערימה למגש, ואז צד ב׳.');
+    warn.innerHTML = w.map(s=> '<div>' + s + '</div>').join('');
+    fitPreview();
   }
-
-  // B: manual duplex — print the odd sheets, then reload and print the even ones.
-  function printDuplexHalf(groups, which){
-    const pages = buildPagesSilently(groups);
-    if(!pages || !pages.length){ toast('אין מה להדפיס'); return 0; }
-    const box = document.getElementById(PAGES_BOX);
-    // "which" is 1 for the front sides (pages 1,3,5…) and 2 for the backs.
-    // The backs print in REVERSE, because a stack flipped over comes back inverted.
-    let keep = pages.filter((p, i)=> (i % 2) === (which === 1 ? 0 : 1));
-    if(which === 2) keep = keep.reverse();
-    box.innerHTML = '';
-    keep.forEach(p=> box.appendChild(p));
-    firePrint();
-    toast(which === 1 ? 'מדפיס צד א׳ · ' + keep.length + ' דפים'
-                      : 'מדפיס צד ב׳ · ' + keep.length + ' דפים');
-    return keep.length;
+  function fitPreview(){
+    const list = document.getElementById('pvList');
+    if(!list) return;
+    const avail = Math.max(200, list.clientWidth - 20);
+    list.querySelectorAll('.pv-paper').forEach(p=>{
+      p.style.zoom = '';
+      const w = p.offsetWidth;
+      if(w) p.style.zoom = Math.min(1, avail / w).toFixed(4);
+    });
   }
+  window.addEventListener('resize', ()=>{
+    const ov = document.getElementById('printPreview');
+    if(ov && ov.style.display !== 'none') fitPreview();
+  });
 
-  // Every booklet button routes through here: pick a layout, then print.
-  let pendingGroups = null;
+  // Every booklet button routes through here: pick a layout, then preview or print.
+  let pendingGroups = null, pendingTitle = '';
   function askPrintLayout(groups, title){
     const usable = (groups || []).filter(g=> g && g.blocks && g.blocks.length);
     if(!usable.length){ toast('אין מה להדפיס'); return; }
     pendingGroups = usable;
+    pendingTitle = String(title || '').replace(/^הדפסת\s+/, '');
     // Offer the השלמות switch only when this print actually contains any.
     const hasHash = usable.some(g=> /השלמות/.test(stripNiqud(g.head || '')));
     const chk = document.getElementById('pcInclHash');
     chk.parentElement.style.display = hasHash ? 'flex' : 'none';
     chk.checked = settings.printHashlamot !== false;
     document.getElementById('pcTitle').textContent = title || 'אופן ההדפסה';
+    const ct = document.getElementById('pcCoverTitle');
+    if(ct) ct.value = pendingTitle;
+    document.getElementById('pcFlowGrp').style.display = usable.length > 1 ? 'flex' : 'none';
+    if(window.__pcPaint) window.__pcPaint();
     document.getElementById('printChooser').style.display = 'flex';
   }
   (function(){
     const back = document.getElementById('printChooser');
+    const pv = document.getElementById('printPreview');
     const close = ()=>{ back.style.display = 'none'; };
-    // typography buttons
-    const paintSet = ()=>{
-      const p = printPrefs();
+    const paint = ()=>{
+      const p = printPrefs(), x = printX();
       back.querySelectorAll('[data-set]').forEach(b=>
         b.classList.toggle('on', String(p[b.dataset.set]) === String(b.dataset.val)));
+      back.querySelectorAll('[data-x]').forEach(b=>
+        b.classList.toggle('on', String(x[b.dataset.x]) === String(b.dataset.val)));
+      back.querySelectorAll('[data-bsize]').forEach(b=>
+        b.classList.toggle('on', b.dataset.bsize === (settings.bookletSize || 'a4')));
+      back.querySelectorAll('input[data-xchk]').forEach(i=>{ i.checked = !!x[i.dataset.xchk]; });
+      const sub = document.getElementById('pcCoverSub'); if(sub && document.activeElement !== sub) sub.value = x.coverSub || '';
+      const dt = document.getElementById('pcCoverDate'); if(dt && document.activeElement !== dt) dt.value = x.coverDate || '';
+      document.getElementById('pcCoverBox').style.display = x.cover ? 'block' : 'none';
+      document.getElementById('pcSizeGrp').style.display = x.mode === 'plain' ? 'flex' : 'none';
+      document.getElementById('pcHelp').style.display = x.side === 'all' ? 'none' : 'block';
+      document.getElementById('pcFlipRow').style.display = (x.side !== 'all' || x.mode === 'booklet') ? 'flex' : 'none';
+      const notes = {
+        plain: 'עמוד אחד בכל דף, בגודל שנבחר (A4 או A5).',
+        twoup: 'שני עמודי A5 זה לצד זה על דף A4 שוכב, לפי סדר הקריאה (הראשון מימין). חוסך חצי מהנייר.',
+        booklet: 'קונטרס אמיתי: מדפיסים דו־צדדי, <b>מקפלים את הערימה באמצע ומהדקים</b> — והעמודים יוצאים לפי הסדר, כמו ספר.'
+      };
+      document.getElementById('pcModeNote').innerHTML = notes[x.mode] || '';
     };
+    window.__pcPaint = paint;
     back.querySelectorAll('[data-set]').forEach(b=>
       b.addEventListener('click', (e)=>{
         e.stopPropagation();
@@ -12657,29 +12930,55 @@
         p[b.dataset.set] = b.dataset.val;
         settings.printPrefs = p;
         saveJSON(LS_SETTINGS, settings);
-        paintSet();
+        paint();
       }));
-    paintSet();
+    back.querySelectorAll('[data-x]').forEach(b=>
+      b.addEventListener('click', (e)=>{ e.stopPropagation(); saveX({ [b.dataset.x]: b.dataset.val }); paint(); }));
+    back.querySelectorAll('[data-bsize]').forEach(b=>
+      b.addEventListener('click', (e)=>{
+        e.stopPropagation();
+        settings.bookletSize = b.dataset.bsize; saveJSON(LS_SETTINGS, settings); paint();
+      }));
+    back.querySelectorAll('input[data-xchk]').forEach(i=>
+      i.addEventListener('change', ()=>{ saveX({ [i.dataset.xchk]: i.checked }); paint(); }));
+    [['pcCoverSub','coverSub'],['pcCoverDate','coverDate']].forEach(([id,k])=>{
+      const el = document.getElementById(id);
+      el.addEventListener('input', ()=> saveX({ [k]: el.value }));
+    });
+    paint();
+    const currentGroups = ()=>{
+      let g = pendingGroups;
+      const chk = document.getElementById('pcInclHash');
+      if(chk && chk.parentElement.style.display !== 'none'){
+        settings.printHashlamot = chk.checked;
+        saveJSON(LS_SETTINGS, settings);
+        if(!chk.checked) g = g.filter(x=> !/השלמות/.test(stripNiqud(x.head || '')));
+      }
+      return g;
+    };
+    const coverTitle = ()=> (document.getElementById('pcCoverTitle').value || '').trim() || pendingTitle;
     document.getElementById('pcCancel').addEventListener('click', close);
     back.addEventListener('click', (e)=>{ if(e.target === back) close(); });
-    back.querySelectorAll('[data-pc]').forEach(b=>
-      b.addEventListener('click', ()=>{
-        let g = pendingGroups;
-        const chk = document.getElementById('pcInclHash');
-        if(chk && chk.parentElement.style.display !== 'none'){
-          settings.printHashlamot = chk.checked;
-          saveJSON(LS_SETTINGS, settings);
-          if(!chk.checked) g = g.filter(x=> !/השלמות/.test(stripNiqud(x.head || '')));
-        }
-        close();
-        if(!g || !g.length){ toast('אין מה להדפיס'); return; }
-        applyTypography();
-        const mode = b.dataset.pc;
-        if(mode === 'plain') printBookletGroups(g);
-        else if(mode === 'twoup') printTwoUpA5(g);
-        else if(mode === 'duplex1') printDuplexHalf(g, 1);
-        else if(mode === 'duplex2') printDuplexHalf(g, 2);
-      }));
+    document.getElementById('pcPrint').addEventListener('click', ()=>{
+      const g = currentGroups();
+      close();
+      if(!g || !g.length){ toast('אין מה להדפיס'); return; }
+      runPrint(g, coverTitle());
+    });
+    document.getElementById('pcPreview').addEventListener('click', ()=>{
+      const g = currentGroups();
+      if(!g || !g.length){ toast('אין מה להדפיס'); return; }
+      pv.style.display = 'flex';
+      document.getElementById('pvList').innerHTML = '<div class="pv-wait">מעמד את העמודים…</div>';
+      setTimeout(()=> renderPreview(g, coverTitle()), 30);
+    });
+    document.getElementById('pvBack').addEventListener('click', ()=>{ pv.style.display = 'none'; document.getElementById('pvList').innerHTML = ''; });
+    document.getElementById('pvPrint').addEventListener('click', ()=>{
+      const g = currentGroups();
+      pv.style.display = 'none'; document.getElementById('pvList').innerHTML = '';
+      close();
+      runPrint(g, coverTitle());
+    });
   })();
 
   function printBookletGroups(groups){
