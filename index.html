@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ספר המידות</title>
-<meta name="app-build" content="e5bfb9e0f3">
+<meta name="app-build" content="7ec60d8048">
 <script>
 /* עדכון אוטומטי: בכל פתיחה בודקים אם עלתה גרסה חדשה לאתר (בלי מטמון), ואם כן – טוענים אותה מיד */
 (function(){try{
   if(!/^https?:$/.test(location.protocol)) return;
-  var cur='e5bfb9e0f3';
+  var cur='7ec60d8048';
   setTimeout(function(){
     fetch(location.pathname+'?_chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="app-build" content="([0-9a-f]{6,})"/); if(!m||m[1]===cur) return;
@@ -40,7 +40,7 @@
     --radius: 14px;
     --font-display: 'Frank Ruhl Libre', serif;
     --font-body: 'Frank Ruhl Libre','David Libre','Noto Serif Hebrew', serif; /* כמו ברסלב PRO */
-    --font-ui: 'Heebo', sans-serif;
+    --font-ui: 'Frank Ruhl Libre','David Libre','Noto Serif Hebrew', serif; /* כל האפליקציה בגופן של ברסלב PRO – גם כפתורים ותוויות */
   }
   *{box-sizing:border-box; -webkit-tap-highlight-color: transparent;}
   select{
@@ -1334,6 +1334,8 @@
   .reminder-bell{
     position:absolute; left:14px; top:10px; background:none; border:none; font-size:20px; cursor:pointer;
   }
+  /* מקום בסוף התפריט כדי שהכפתור האחרון (עדכון גרסה) לא יוסתר על ידי הכפתורים הצפים ופס ההקדשות */
+  #landing .landing-buttons{ padding-bottom:96px; }
   .landing-music-btn{
     position:absolute; left:50px; top:10px; background:none; border:none; font-size:20px; cursor:pointer; padding:0;
   }
@@ -1647,7 +1649,7 @@
       font-family:'Frank Ruhl Libre', serif; text-align:center; font-size:22px; margin-bottom:6px;
     }
     #printArea .print-source{
-      font-family:'Heebo', sans-serif; text-align:center; font-size:13px; color:#444; margin-bottom:18px;
+      font-family:'Frank Ruhl Libre', serif; text-align:center; font-size:13px; color:#444; margin-bottom:18px;
     }
     #printArea .print-item{ font-size:16px; line-height:1.9; white-space:pre-wrap; margin-bottom:18px; }
     #printArea .print-item-title{ font-family:'Frank Ruhl Libre', serif; font-size:16px; margin-bottom:4px; }
@@ -1679,7 +1681,7 @@
 /* SETUP */
 #snk-setup-back{position:absolute; top:10px; inset-inline-start:10px; z-index:20; width:34px; height:34px; border-radius:50%; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); color:#fff; font-size:18px; display:flex; align-items:center; justify-content:center; cursor:pointer;}
 #setup{gap:9px;padding:14px 16px 24px;}
-.s-title{font-family:'Orbitron',monospace;font-size:20px;font-weight:900;color:var(--neon);text-shadow:0 0 16px var(--neon);letter-spacing:2px;}
+.s-title{font-family:'Orbitron','Frank Ruhl Libre',monospace;font-size:20px;font-weight:900;color:var(--neon);text-shadow:0 0 16px var(--neon);letter-spacing:2px;}
 .s-sub{font-size:11px;color:rgba(255,255,255,.35);}
 .s-sec{width:100%;max-width:340px;display:flex;flex-direction:column;gap:4px;}
 .s-lbl{font-size:10px;font-weight:700;color:rgba(255,255,255,.38);letter-spacing:1.5px;text-transform:uppercase;}
@@ -1693,38 +1695,38 @@
 .tb.on-r{background:rgba(255,77,109,.12);border-color:var(--danger);color:var(--danger);}
 .tb.on-o{background:rgba(255,123,0,.12);border-color:var(--p2c);color:var(--p2c);}
 .spd-row{display:flex;align-items:center;gap:8px;}
-.spd-val{font-family:'Orbitron',monospace;font-size:18px;font-weight:900;color:var(--gold);min-width:22px;text-align:center;}
+.spd-val{font-family:'Orbitron','Frank Ruhl Libre',monospace;font-size:18px;font-weight:900;color:var(--gold);min-width:22px;text-align:center;}
 #snakeGame input[type=range]{flex:1;accent-color:var(--neon);-webkit-appearance:none;height:4px;background:rgba(0,255,163,.18);border-radius:4px;outline:none;cursor:pointer;}
 #snakeGame input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--neon);box-shadow:0 0 7px var(--neon);cursor:pointer;}
-.primary-btn{width:100%;max-width:340px;padding:13px;background:rgba(0,255,163,.12);border:2px solid var(--neon);border-radius:10px;color:var(--neon);font-family:'Orbitron',monospace;font-size:14px;font-weight:900;letter-spacing:3px;cursor:pointer;touch-action:manipulation;}
+.primary-btn{width:100%;max-width:340px;padding:13px;background:rgba(0,255,163,.12);border:2px solid var(--neon);border-radius:10px;color:var(--neon);font-family:'Orbitron','Frank Ruhl Libre',monospace;font-size:14px;font-weight:900;letter-spacing:3px;cursor:pointer;touch-action:manipulation;}
 .primary-btn:active{background:rgba(0,255,163,.25);}
 .hs-open-btn{width:100%;max-width:340px;padding:9px;background:rgba(255,216,77,.07);border:1px solid rgba(255,216,77,.25);border-radius:8px;color:var(--gold);font-family:'Assistant',Arial,sans-serif;font-size:13px;font-weight:700;cursor:pointer;touch-action:manipulation;}
 #mine-level-row{display:none;}
 /* INTRO */
 #intro{z-index:500;justify-content:center;gap:0;}
-#intro-logo{font-family:'Orbitron',monospace;font-size:26px;font-weight:900;color:var(--neon);text-shadow:0 0 30px var(--neon),0 0 60px rgba(0,255,163,.3);letter-spacing:3px;text-align:center;padding:10px 20px;}
+#intro-logo{font-family:'Orbitron','Frank Ruhl Libre',monospace;font-size:26px;font-weight:900;color:var(--neon);text-shadow:0 0 30px var(--neon),0 0 60px rgba(0,255,163,.3);letter-spacing:3px;text-align:center;padding:10px 20px;}
 #intro-sub{font-size:13px;color:rgba(255,255,255,.4);margin-bottom:30px;}
-#cnt{font-family:'Orbitron',monospace;font-size:110px;font-weight:900;line-height:1;text-align:center;min-height:130px;display:flex;align-items:center;justify-content:center;}
+#cnt{font-family:'Orbitron','Frank Ruhl Libre',monospace;font-size:110px;font-weight:900;line-height:1;text-align:center;min-height:130px;display:flex;align-items:center;justify-content:center;}
 @keyframes cntIn{0%{transform:scale(2.5);opacity:0;}25%{transform:scale(1.1);opacity:1;}85%{transform:scale(1);opacity:1;}100%{transform:scale(.5);opacity:0;}}
 @keyframes goIn{0%{transform:scale(.3) rotate(-10deg);opacity:0;}60%{transform:scale(1.15) rotate(2deg);opacity:1;}100%{transform:scale(1) rotate(0);opacity:1;}}
 /* HIGH SCORES */
 #hs-modal{z-index:200;justify-content:flex-start;padding:20px 16px;backdrop-filter:blur(8px);}
-.hs-title{font-family:'Orbitron',monospace;font-size:20px;font-weight:900;color:var(--gold);text-shadow:0 0 14px var(--gold);margin-bottom:12px;}
+.hs-title{font-family:'Orbitron','Frank Ruhl Libre',monospace;font-size:20px;font-weight:900;color:var(--gold);text-shadow:0 0 14px var(--gold);margin-bottom:12px;}
 .hs-table{width:100%;max-width:340px;border-collapse:collapse;margin-bottom:16px;}
 .hs-table th{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:1.5px;padding:5px 8px;border-bottom:1px solid rgba(255,255,255,.08);}
 .hs-table td{font-size:13px;padding:6px 8px;border-bottom:1px solid rgba(255,255,255,.05);}
 .hs-table tr:nth-child(1) td{color:var(--gold);}
 .hs-table tr:nth-child(2) td{color:rgba(220,220,220,.9);}
 .hs-table tr:nth-child(3) td{color:rgba(205,127,50,.9);}
-.hs-close{padding:10px 28px;background:rgba(255,216,77,.1);border:1px solid rgba(255,216,77,.3);border-radius:8px;color:var(--gold);font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;touch-action:manipulation;}
+.hs-close{padding:10px 28px;background:rgba(255,216,77,.1);border:1px solid rgba(255,216,77,.3);border-radius:8px;color:var(--gold);font-family:'Orbitron','Frank Ruhl Libre',monospace;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;touch-action:manipulation;}
 /* GAME */
 #game{position:fixed;inset:0;display:none;flex-direction:column;max-width:480px;margin:0 auto;z-index:5;}
 #game.on{display:flex;}
 #hud{flex-shrink:0;padding:3px 10px 2px;background:rgba(0,0,0,.55);border-bottom:1px solid var(--br);}
 .hud-top{display:flex;justify-content:space-between;align-items:center;}
 .hud-block{display:flex;flex-direction:column;align-items:center;}
-.hud-lbl{font-family:'Orbitron',monospace;font-size:7px;color:rgba(0,255,163,.35);letter-spacing:1.5px;}
-.hud-val{font-family:'Orbitron',monospace;font-size:16px;font-weight:900;color:var(--neon);text-shadow:0 0 8px var(--neon);}
+.hud-lbl{font-family:'Orbitron','Frank Ruhl Libre',monospace;font-size:7px;color:rgba(0,255,163,.35);letter-spacing:1.5px;}
+.hud-val{font-family:'Orbitron','Frank Ruhl Libre',monospace;font-size:16px;font-weight:900;color:var(--neon);text-shadow:0 0 8px var(--neon);}
 .hud-val.p2c{color:var(--p2c);text-shadow:0 0 8px var(--p2c);}
 .hud-name{font-size:11px;font-weight:800;color:rgba(255,255,255,.8);}
 #lives-row{display:flex;justify-content:center;gap:2px;font-size:13px;line-height:1;margin:1px 0;}
@@ -1770,20 +1772,20 @@
 #shoot-btn{width:48px;height:48px;background:rgba(255,77,109,.12);border:2px solid rgba(255,77,109,.5);border-radius:11px;color:#ff4d6d;font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;touch-action:manipulation;animation:sPulse .8s ease-in-out infinite alternate;}
 @keyframes sPulse{from{box-shadow:0 0 6px rgba(255,77,109,.3);}to{box-shadow:0 0 16px rgba(255,77,109,.7);}}
 #shoot-btn:active{transform:scale(.83);}
-#shoot-info{font-family:'Orbitron',monospace;font-size:9px;font-weight:700;color:#ff4d6d;text-align:center;line-height:1.2;}
+#shoot-info{font-family:'Orbitron','Frank Ruhl Libre',monospace;font-size:9px;font-weight:700;color:#ff4d6d;text-align:center;line-height:1.2;}
 #shoot-bar-wrap{width:40px;height:3px;background:rgba(255,77,109,.18);border-radius:2px;}
 #shoot-bar{height:100%;background:#ff4d6d;border-radius:2px;}
 #go{display:none;position:absolute;inset:0;background:rgba(4,13,20,.94);flex-direction:column;align-items:center;justify-content:center;gap:9px;z-index:50;backdrop-filter:blur(6px);border-radius:8px;}
 #go.on{display:flex;}
-.go-t{font-family:'Orbitron',monospace;font-size:22px;font-weight:900;color:var(--danger);text-shadow:0 0 20px var(--danger);letter-spacing:3px;}
-.go-winner{font-family:'Orbitron',monospace;font-size:16px;color:var(--gold);text-shadow:0 0 12px var(--gold);}
+.go-t{font-family:'Orbitron','Frank Ruhl Libre',monospace;font-size:22px;font-weight:900;color:var(--danger);text-shadow:0 0 20px var(--danger);letter-spacing:3px;}
+.go-winner{font-family:'Orbitron','Frank Ruhl Libre',monospace;font-size:16px;color:var(--gold);text-shadow:0 0 12px var(--gold);}
 .go-scores{display:flex;gap:20px;}
 .go-sc-blk{display:flex;flex-direction:column;align-items:center;gap:1px;}
 .go-sc-name{font-size:11px;color:rgba(255,255,255,.5);}
-.go-sc-val{font-family:'Orbitron',monospace;font-size:20px;font-weight:900;color:var(--neon);text-shadow:0 0 8px var(--neon);}
+.go-sc-val{font-family:'Orbitron','Frank Ruhl Libre',monospace;font-size:20px;font-weight:900;color:var(--neon);text-shadow:0 0 8px var(--neon);}
 .go-sc-val.p2c{color:var(--p2c);text-shadow:0 0 8px var(--p2c);}
 .go-p{font-size:11px;color:var(--gold);text-align:center;max-width:220px;line-height:1.8;}
-.go-btn{padding:8px 20px;background:rgba(0,255,163,.1);border:1px solid rgba(0,255,163,.35);border-radius:8px;color:var(--neon);font-family:'Orbitron',monospace;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;touch-action:manipulation;}
+.go-btn{padding:8px 20px;background:rgba(0,255,163,.1);border:1px solid rgba(0,255,163,.35);border-radius:8px;color:var(--neon);font-family:'Orbitron','Frank Ruhl Libre',monospace;font-size:11px;font-weight:700;letter-spacing:2px;cursor:pointer;touch-action:manipulation;}
 .go-btn:active{background:rgba(0,255,163,.22);}
 .go-btn2{background:transparent;border-color:rgba(255,255,255,.1);color:rgba(255,255,255,.35);font-size:9px;}
 
@@ -1989,6 +1991,13 @@
           <div class="lb-sub">כל ספרי רבנו ותלמידיו במקום אחד</div>
         </div>
       </a>
+      <div class="landing-btn" id="btnAppUpdate">
+        <span class="lb-ic">🔄</span>
+        <div>
+          <div class="lb-label">עדכון גרסה</div>
+          <div class="lb-sub" id="appUpdateSub">בדיקה אם יש גרסה חדשה של האפליקציה</div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -3518,8 +3527,8 @@
         <div class="tc-row" style="align-items:flex-start;">
           <span class="tc-label">גופן</span>
           <div class="font-ctrl" id="fontFamilyCtrl">
-            <button class="font-btn active" data-font="Noto Serif Hebrew" style="font-family:'Noto Serif Hebrew',serif;">אבגד</button>
-            <button class="font-btn" data-font="Frank Ruhl Libre" style="font-family:'Frank Ruhl Libre',serif;">אבגד</button>
+            <button class="font-btn" data-font="Noto Serif Hebrew" style="font-family:'Noto Serif Hebrew',serif;">אבגד</button>
+            <button class="font-btn active" data-font="Frank Ruhl Libre" style="font-family:'Frank Ruhl Libre',serif;">אבגד</button>
             <button class="font-btn" data-font="David Libre" style="font-family:'David Libre',serif;">אבגד</button>
             <button class="font-btn" data-font="Suez One" style="font-family:'Suez One',serif;">אבגד</button>
             <button class="font-btn" data-font="Miriam Libre" style="font-family:'Miriam Libre',sans-serif;">אבגד</button>
@@ -5250,7 +5259,7 @@
   let lastThemeKey = null;
   let customBgDataUrl = null;
   let templateFontSize = 48;
-  let templateFontFamily = 'Noto Serif Hebrew';
+  let templateFontFamily = 'Frank Ruhl Libre';
   let templateTextPosX = 0.5; // fraction of canvas width, draggable
   let templateTextPosY = 0.5; // fraction of canvas height, draggable
   // Free-form rich text override for the template's main text: null means
@@ -5309,7 +5318,7 @@
     lastThemeKey = null;
     customBgDataUrl = null;
     templateFontSize = 48;
-    templateFontFamily = 'Noto Serif Hebrew';
+    templateFontFamily = 'Frank Ruhl Libre';
     templateTextPosX = 0.5;
     templateTextPosY = 0.5;
     templateRichHtml = null;
@@ -8530,7 +8539,7 @@
     ctx.direction = 'rtl';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.font = 'bold 18px "Noto Serif Hebrew", serif';
+    ctx.font = 'bold 18px "Frank Ruhl Libre", "Noto Serif Hebrew", serif';
     ttTiles.forEach(t=>{
       const halfW = t.w/2, x = t.x - halfW, y = t.y - 20, w = t.w, h = 40;
       let top, bot, edge, txt;
@@ -9286,7 +9295,7 @@
       ctx.textAlign = 'center';
       ctx.shadowColor = 'rgba(0,0,0,.6)'; ctx.shadowBlur = 2; ctx.shadowOffsetY = 1;
       ctx.fillStyle = '#FBF3DE';
-      ctx.font = 'bold 12px "Heebo", sans-serif';
+      ctx.font = 'bold 12px "Frank Ruhl Libre", serif';
       // "loseTurn" only makes sense as a real consequence when there's a
       // second player to hand the turn to — solo, it used to mean nothing
       // at all ("spin again"), so the wheel shows (and the spin result
@@ -11158,7 +11167,7 @@
     ctx.save();
     ctx.fillStyle = victorious ? 'rgba(20,16,12,0.75)' : 'rgba(20,16,12,0.55)';
     ctx.fillRect(0, rnBannerY, W, 28);
-    ctx.font = 'bold 17px "Noto Serif Hebrew", serif';
+    ctx.font = 'bold 17px "Frank Ruhl Libre", "Noto Serif Hebrew", serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.direction = 'rtl';
@@ -11187,7 +11196,7 @@
     // Shifted down the same amount as the banner in fullscreen so it
     // doesn't cross behind/through the (also shifted) banner text.
     ctx.save();
-    ctx.font = '13px "Noto Serif Hebrew", serif';
+    ctx.font = '13px "Frank Ruhl Libre", "Noto Serif Hebrew", serif';
     ctx.fillStyle = 'rgba(255,255,255,0.32)';
     ctx.textAlign = 'right';
     ctx.direction = 'rtl';
@@ -11272,7 +11281,7 @@
     });
 
     // letters
-    ctx.font = 'bold 16px "Noto Serif Hebrew", serif';
+    ctx.font = 'bold 16px "Frank Ruhl Libre", "Noto Serif Hebrew", serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     rnLevelData.letters.forEach(l=>{
@@ -11293,7 +11302,7 @@
       ctx.fillStyle = '#5C2222';
       ctx.font = '18px sans-serif';
       ctx.fillText(e.emoji || theme.enemy, ex, e.y-9);
-      ctx.font = 'bold 16px "Noto Serif Hebrew", serif';
+      ctx.font = 'bold 16px "Frank Ruhl Libre", "Noto Serif Hebrew", serif';
     });
     // the caged final letter — a real cage graphic (bars) around a glowing
     // letter, standing at a fixed spot deep in the arena, replacing the
@@ -11309,7 +11318,7 @@
         ctx.arc(cx, cy, 15, 0, Math.PI*2);
         ctx.fill();
         ctx.fillStyle = '#5C2222';
-        ctx.font = 'bold 17px "Noto Serif Hebrew", serif';
+        ctx.font = 'bold 17px "Frank Ruhl Libre", "Noto Serif Hebrew", serif';
         ctx.fillText(rnLevelData.bossLetter, cx, cy);
         // cage bars drawn over the letter, so it visibly reads as "locked
         // away" rather than just floating there
@@ -11323,7 +11332,7 @@
         }
         ctx.strokeRect(cx-15, cy-20, 30, 40);
         ctx.lineWidth = 1;
-        ctx.font = 'bold 16px "Noto Serif Hebrew", serif';
+        ctx.font = 'bold 16px "Frank Ruhl Libre", "Noto Serif Hebrew", serif';
       }
     }
     // boss — drawn while actively fighting, and for a brief "falling" beat
@@ -11395,7 +11404,7 @@
         ctx.font = '38px sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('🌟', gx, RN_GROUND_Y-55);
-        ctx.font = '13px "Noto Serif Hebrew", serif';
+        ctx.font = '13px "Frank Ruhl Libre", "Noto Serif Hebrew", serif';
         ctx.fillStyle = '#5C2222';
         ctx.fillText('לך לאור!', gx, RN_GROUND_Y-100);
         ctx.restore();
@@ -11458,7 +11467,7 @@
       // shot are full sentences, much longer than the old 2-3 word
       // messages) word-wrap across multiple lines instead of one fillText
       // call squeezing/overflowing an entire sentence onto a single line.
-      ctx.font = 'bold 12px "Noto Serif Hebrew", serif';
+      ctx.font = 'bold 12px "Frank Ruhl Libre", "Noto Serif Hebrew", serif';
       ctx.fillStyle = '#5C2222';
       const maxLineWidth = 150;
       const words = fx.label.split(' ');
@@ -11554,7 +11563,7 @@
         ctx.globalAlpha = fadeT;
         ctx.fillStyle = 'rgba(20,16,12,0.6)';
         ctx.fillRect(0, H/2-34, W, 68);
-        ctx.font = 'bold 16px "Noto Serif Hebrew", serif';
+        ctx.font = 'bold 16px "Frank Ruhl Libre", "Noto Serif Hebrew", serif';
         ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         ctx.direction = 'rtl';
@@ -16018,6 +16027,36 @@ tznBody._tznRerender = tznRender;
     window.shDedicate = hkForm;
     const db = document.getElementById('btnDedicate'); if(db) db.addEventListener('click', hkForm);
     window.__shTickers = { quoteTick, hkTick, hkFetch, hkForm, shareApp, parseNames, get live(){ return hkLive; }, set live(v){ hkLive = v; } };
+  })();
+
+
+  // ================= כפתור "עדכון גרסה" בסוף התפריט הראשי =================
+  (function initAppUpdateBtn(){
+    const btn = document.getElementById('btnAppUpdate'); if(!btn) return;
+    const meta = document.querySelector('meta[name="app-build"]');
+    const cur = meta ? meta.content : '';
+    const sub = document.getElementById('appUpdateSub');
+    let busy = false;
+    btn.addEventListener('click', ()=>{
+      if(busy) return;
+      if(!/^https?:$/.test(location.protocol)){ toast('העדכון עובד רק מהקישור באינטרנט'); return; }
+      busy = true; if(sub) sub.textContent = 'בודק…';
+      fetch(location.pathname + '?_chk=' + Date.now(), { cache:'no-store' })
+        .then(r => r.ok ? r.text() : Promise.reject())
+        .then(t => {
+          const m = t.match(/name="app-build" content="([0-9a-f]{6,})"/);
+          if(m && m[1] !== cur){
+            toast('🔄 נמצאה גרסה חדשה – מעדכן…');
+            try{ sessionStorage.setItem('sh_upd_' + m[1], '1'); }catch(e){}
+            setTimeout(()=> location.replace(location.pathname + '?v=' + m[1] + location.hash), 500);
+          } else {
+            toast('✓ יש לך את הגרסה העדכנית ביותר');
+            if(sub) sub.textContent = 'הגרסה העדכנית ✓';
+            busy = false;
+          }
+        })
+        .catch(()=>{ toast('אין חיבור לאינטרנט – נסו שוב מאוחר יותר'); if(sub) sub.textContent = 'בדיקה אם יש גרסה חדשה של האפליקציה'; busy = false; });
+    });
   })();
 
   // ================= ביאורים מרכזיים + שיתוף מקורות =================
