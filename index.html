@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ספר המידות</title>
-<meta name="app-build" content="91874e15d6">
+<meta name="app-build" content="b0add3ef9a">
 <script>
 /* עדכון אוטומטי: בכל פתיחה בודקים אם עלתה גרסה חדשה לאתר (בלי מטמון), ואם כן – טוענים אותה מיד */
 (function(){try{
   if(!/^https?:$/.test(location.protocol)) return;
-  var cur='91874e15d6';
+  var cur='b0add3ef9a';
   setTimeout(function(){
     fetch(location.pathname+'?_chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="app-build" content="([0-9a-f]{6,})"/); if(!m||m[1]===cur) return;
@@ -1833,6 +1833,36 @@
   .tzaddikim-cat-body p, .sp-scope .sp-today-text, .practice-card .practice-text, .translation-panel{
     text-align:justify; line-height:1.85; word-spacing:.02em;
   }
+
+  /* ===== קונטרס האמירות בסגנון מסך הלימוד (כמו ברסלב PRO): בלי כרטיסים, רקע נוף, כותרת מקור ממורכזת עם קווי זהב ===== */
+  #amirotKuntresList{ background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 800%22 preserveAspectRatio=%22xMidYMid slice%22%3E%3Cdefs%3E%3ClinearGradient id=%22s%22 x1=%220%22 y1=%220%22 x2=%220%22 y2=%221%22%3E%3Cstop offset=%220%22 stop-color=%22%239fc0d0%22 stop-opacity=%22.30%22/%3E%3Cstop offset=%22.5%22 stop-color=%22%23ffffff%22 stop-opacity=%22.10%22/%3E%3Cstop offset=%221%22 stop-color=%22%23a9c79b%22 stop-opacity=%22.22%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%22400%22 height=%22800%22 fill=%22url%28%23s%29%22/%3E%3Ccircle cx=%2288%22 cy=%22190%22 r=%2242%22 fill=%22%23f6dc8a%22 fill-opacity=%22.42%22/%3E%3Cpath d=%22M0 470 L60 400 L110 450 L170 380 L230 455 L300 395 L360 440 L400 410 L400 800 L0 800Z%22 fill=%22%238fa9bb%22 fill-opacity=%22.20%22/%3E%3Cpath d=%22M0 560 L70 500 L140 550 L210 480 L290 545 L350 505 L400 540 L400 800 L0 800Z%22 fill=%22%238fb39a%22 fill-opacity=%22.22%22/%3E%3Cpath d=%22M0 640 L80 590 L160 630 L240 585 L320 635 L400 600 L400 800 L0 800Z%22 fill=%22%237fae7a%22 fill-opacity=%22.24%22/%3E%3Cpath d=%22M0 720 L100 680 L200 715 L300 675 L400 705 L400 800 L0 800Z%22 fill=%22%236fa26a%22 fill-opacity=%22.28%22/%3E%3C/svg%3E"); background-size:cover; background-position:center bottom; background-repeat:no-repeat; background-attachment:local;
+    padding:6px 18px 120px; font-size:22px; }
+  body[data-theme="night"] #amirotKuntresList, body.has-custom-bg #amirotKuntresList{ background-image:none; }
+  #amirotKuntresList .amira-kuntres-card{ background:transparent; border:0; border-radius:0; padding:0; margin:0 0 14px; box-shadow:none; }
+  #amirotKuntresList .amira-kuntres-source{
+    display:flex; align-items:center; justify-content:center; gap:10px; text-align:center;
+    margin:22px 0 8px; font-size:.6em; font-weight:700; color:#2c3d63; line-height:1.4;
+  }
+  body[data-theme="night"] #amirotKuntresList .amira-kuntres-source{ color:#c9a24c; }
+  #amirotKuntresList .amira-kuntres-source::before, #amirotKuntresList .amira-kuntres-source::after{
+    content:""; height:1px; flex:1 1 30px; min-width:24px; max-width:70px; background:linear-gradient(to left,transparent,#c9a24c,transparent);
+  }
+  #amirotKuntresList .amira-kuntres-quote{
+    font-size:1em; line-height:1.85; text-align:justify; word-spacing:.02em; white-space:pre-wrap;
+    border:0; padding:0; margin:0 0 12px;
+  }
+  #amirotKuntresList .amira-kuntres-amira{ padding:12px 16px 14px; border-radius:14px; }
+  #amirotKuntresList .amira-kuntres-title{ font-size:.82em; line-height:1.4; margin-bottom:2px; }
+  #amirotKuntresList .amira-kuntres-src2{ font-size:.58em; margin-bottom:8px; }
+  #amirotKuntresList .amira-variant-label{ font-size:.58em; margin:12px 0 4px; }
+  #amirotKuntresList .amira-body-text, #amirotKuntresList .amira-variant-text{ font-size:.92em; line-height:1.85; text-align:justify; }
+  #amirotKuntresList .amira-kuntres-card > div:last-child{ gap:8px !important; margin-top:12px !important; }
+  #amirotKuntresList .amira-kuntres-copy, #amirotKuntresList .amira-kuntres-print, #amirotKuntresList .amira-kuntres-speak,
+  #amirotKuntresList .amira-kuntres-edit, #amirotKuntresList .amira-kuntres-del{
+    border-radius:999px !important; padding:7px 10px !important; font-size:13px !important; font-weight:700;
+    color:var(--maroon-dark); background:var(--paper) !important; border-color:var(--line) !important;
+  }
+  #amirotKuntresList .amira-kuntres-del{ color:#c0392b; border-color:#e5a39a !important; }
   /* ===== מסך הלימוד בסגנון הטקסט של ברסלב PRO ===== */
   #reader{ background-image:url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 800%22 preserveAspectRatio=%22xMidYMid slice%22%3E%3Cdefs%3E%3ClinearGradient id=%22s%22 x1=%220%22 y1=%220%22 x2=%220%22 y2=%221%22%3E%3Cstop offset=%220%22 stop-color=%22%239fc0d0%22 stop-opacity=%22.30%22/%3E%3Cstop offset=%22.5%22 stop-color=%22%23ffffff%22 stop-opacity=%22.10%22/%3E%3Cstop offset=%221%22 stop-color=%22%23a9c79b%22 stop-opacity=%22.22%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width=%22400%22 height=%22800%22 fill=%22url%28%23s%29%22/%3E%3Ccircle cx=%2288%22 cy=%22190%22 r=%2242%22 fill=%22%23f6dc8a%22 fill-opacity=%22.42%22/%3E%3Cpath d=%22M0 470 L60 400 L110 450 L170 380 L230 455 L300 395 L360 440 L400 410 L400 800 L0 800Z%22 fill=%22%238fa9bb%22 fill-opacity=%22.20%22/%3E%3Cpath d=%22M0 560 L70 500 L140 550 L210 480 L290 545 L350 505 L400 540 L400 800 L0 800Z%22 fill=%22%238fb39a%22 fill-opacity=%22.22%22/%3E%3Cpath d=%22M0 640 L80 590 L160 630 L240 585 L320 635 L400 600 L400 800 L0 800Z%22 fill=%22%237fae7a%22 fill-opacity=%22.24%22/%3E%3Cpath d=%22M0 720 L100 680 L200 715 L300 675 L400 705 L400 800 L0 800Z%22 fill=%22%236fa26a%22 fill-opacity=%22.28%22/%3E%3C/svg%3E"); background-size:cover; background-position:center bottom; background-repeat:no-repeat; }
   body[data-theme="night"] #reader, body.has-custom-bg #reader{ background-image:none; }
@@ -4907,6 +4937,7 @@
 
   function applyFontSize(){
     readerItemsEl.style.fontSize = fontSize + 'px';
+    { const k = document.getElementById('amirotKuntresList'); if(k) k.style.fontSize = fontSize + 'px'; } // קונטרס האמירות באותו גודל אות כמו מסך הלימוד
   }
 
   function partLabel(n){
@@ -13662,6 +13693,7 @@ tznBody._tznRerender = tznRender;
   }
   function renderAmirotKuntres(){
     const el = document.getElementById('amirotKuntresList');
+    el.style.fontSize = fontSize + 'px';
     const addBtn = document.getElementById('amirotAddBtn');
     if(addBtn) addBtn.style.display = adminMode ? '' : 'none';
     el.innerHTML = '';
