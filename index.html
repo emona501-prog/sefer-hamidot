@@ -4,12 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ספר המידות</title>
-<meta name="app-build" content="d1e17802dc">
+<meta name="app-build" content="1d784b22e8">
 <script>
 /* עדכון אוטומטי: בכל פתיחה בודקים אם עלתה גרסה חדשה לאתר (בלי מטמון), ואם כן – טוענים אותה מיד */
 (function(){try{
   if(!/^https?:$/.test(location.protocol)) return;
-  var cur='d1e17802dc';
+  var cur='1d784b22e8';
   setTimeout(function(){
     fetch(location.pathname+'?_chk='+Date.now(),{cache:'no-store'}).then(function(r){return r.ok?r.text():'';}).then(function(t){
       var m=t.match(/name="app-build" content="([0-9a-f]{6,})"/); if(!m||m[1]===cur) return;
@@ -3835,8 +3835,12 @@
       '.bp-head{font-family:' + o.font + ';font-size:9.5pt;font-weight:400;text-align:center;',
       '  color:#444;border-bottom:.5pt solid #aaa;padding:0 0 4pt;margin:0 0 8pt;flex:0 0 auto}',
       '.bp-body{flex:1 1 auto;overflow:hidden}',
+      // while paginating, the body is measured a little shorter than it really
+      // is. The printer (or a zoomed preview) never lays text out exactly like
+      // the measuring pass did; this slack keeps the last line from spilling.
+      '.bp-measure .bp-body{margin-bottom:' + (o.slack == null ? 5 : o.slack) + 'mm}',
       '.bp-body p{font-family:' + o.font + ';font-size:' + o.size + ';line-height:' + o.line + ';',
-      '  margin:0 0 6pt;text-align:justify}',
+      '  margin:0 0 6pt;text-align:justify;overflow-wrap:break-word}',
       '.bp-foot{flex:0 0 auto;text-align:center;font-size:9pt;color:#555;padding-top:6pt}',
       '@media print{',
       '  @page{size:auto;margin:' + o.margin + 'mm}',
@@ -3863,6 +3867,7 @@
       document.body.appendChild(box);
     }
     box.innerHTML = '';
+    box.classList.add('bp-measure');
     document.body.classList.add('bp-printing');
     // מודדים מחוץ למסך, אבל עם מידות אמיתיות
     box.style.display = 'block';
@@ -3890,7 +3895,7 @@
     }
 
     // with CSS columns the overflow goes sideways into an extra column, not down
-    function fits() { return body.scrollHeight <= body.clientHeight && body.scrollWidth <= body.clientWidth + 1; }
+    function fits() { return body.scrollHeight <= body.clientHeight && body.scrollWidth <= body.clientWidth * 1.1 + 2; }  // a real overflow column adds a whole column; a few px are just Chrome's column rounding
 
     function lineHeight() {
       var p = body.querySelector('p');
@@ -3959,6 +3964,7 @@
       });
     });
 
+    box.classList.remove('bp-measure');
     box.style.position = 'static';
     box.style.left = 'auto';
     return pageNo;
@@ -12670,7 +12676,7 @@
     if(groups.length < 2) return groups;
     const blocks = [];
     groups.forEach(g=>{
-      const h = '<bp-h>' + escapeHtml(String(g.head || '').replace(/^ספר המידות · /, '')).replace(/ /g, '&nbsp;') + '</bp-h>';
+      const h = '<bp-h>' + escapeHtml(String(g.head || '').replace(/^ספר המידות · /, '')).replace(/ /g, '&nbsp;\u200B') + '</bp-h>';
       g.blocks.forEach((b, i)=>{
         blocks.push(i === 0 && g.head ? (/^<p>/.test(b) ? b.replace(/^<p>/, '<p>' + h) : '<p>' + h + '</p>' + b) : b);
       });
